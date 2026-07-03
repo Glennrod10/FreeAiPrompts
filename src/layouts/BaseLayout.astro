@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+export interface Props {
+  title: string;
+  description: string;
+  wide?: boolean;
+}
+const { title, description, wide } = Astro.props;
+const path = Astro.url.pathname;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="border-b border-default" style="background: transparent;">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 sm:gap-6">
+          <a href="/" class="flex items-center gap-2.5 shrink-0">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5" fill="none" class="text-tertiary" />
+              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-primary" />
+            </svg>
+            <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
+          </a>
+          <nav class="flex items-center gap-1">
+            <a href="/" class:list={['nav-link', path === '/' && 'active']}>Generator</a>
+            <a href="/" class="nav-link">Templates</a>
+            <a href="/" class="nav-link">Analyzer</a>
+            <a href="/prompts" class:list={['nav-link', path.startsWith('/prompts') && 'active']}>Prompts</a>
+          </nav>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+          <svg id="theme-icon-sun" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="theme-icon-moon" class="h-4 w-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 class:list={wide ? 'max-w-6xl' : 'max-w-3xl'}">
+      <slot />
+    </main>
+
+    <footer class="border-t border-default">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2 text-xs text-tertiary">
+            <span>Free Prompt Studio</span>
+            <span class="text-border">·</span>
+            <span>100% browser · No signup · Free</span>
+          </div>
+          <nav class="flex items-center gap-4 text-xs text-secondary">
+            <a href="/terms" class="hover:text-primary transition-colors">Terms</a>
+            <a href="/privacy" class="hover:text-primary transition-colors">Privacy</a>
+            <a href="/faq" class="hover:text-primary transition-colors">FAQ</a>
+          </nav>
+        </div>
+        <p class="mt-4 text-[10px] text-tertiary text-center sm:text-left">Free Prompt Studio — 100% static, runs entirely in your browser. No data is sent to any server.</p>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+        function setTheme(theme) {
+          html.classList.toggle('light', theme === 'light');
+          html.classList.toggle('dark', theme !== 'light');
+          sunIcon.classList.toggle('hidden', theme === 'light');
+          moonIcon.classList.toggle('hidden', theme !== 'light');
+          try { localStorage.setItem('theme', theme); } catch {}
+        }
+        const saved = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
+        setTheme(saved === 'light' ? 'light' : 'dark');
+        themeToggle.addEventListener('click', () => setTheme(html.classList.contains('light') ? 'dark' : 'light'));
+      })();
+    </script>
+  </body>
+</html>

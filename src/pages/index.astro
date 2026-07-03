@@ -1,0 +1,1450 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="en" class="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Free Prompt Studio — AI Prompt Generator, Templates & Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content="Generate optimized AI prompts, browse template libraries, and analyze your prompts for quality — all in your browser." />
+  </head>
+  <body>
+    <!-- ═══════ HEADER (full width) ═══════ -->
+    <header class="border-b border-default">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 sm:gap-6">
+          <button class="flex items-center gap-2.5 shrink-0 cursor-pointer bg-transparent border-none text-left" id="logo-btn">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5" fill="none" class="text-tertiary" />
+              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-primary" />
+            </svg>
+            <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
+          </button>
+          <nav class="hidden sm:flex items-center gap-1">
+            <button class="nav-link active" data-nav="generator">Generator</button>
+            <button class="nav-link" data-nav="templates">Templates</button>
+            <button class="nav-link" data-nav="analyzer">Analyzer</button>
+            <a href="/prompts" class="nav-link">Prompts</a>
+          </nav>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Mobile nav pills -->
+          <div class="flex sm:hidden items-center gap-1 overflow-x-auto max-w-[220px]" id="mobile-nav">
+            <button class="btn-ghost active whitespace-nowrap" data-nav="generator">Gen</button>
+            <button class="btn-ghost whitespace-nowrap" data-nav="templates">Templates</button>
+            <button class="btn-ghost whitespace-nowrap" data-nav="analyzer">Analyze</button>
+            <a href="/prompts" class="btn-ghost whitespace-nowrap">Prompts</a>
+          </div>
+          <button class="theme-toggle shrink-0" id="theme-toggle" title="Toggle theme">
+            <svg class="w-4 h-4" id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg class="w-4 h-4 hidden" id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══════ MAIN CONTENT (centered) ═══════ -->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Page heading -->
+      <div class="pt-6 sm:pt-8 pb-3 sm:pb-4">
+        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-primary">Turn rough ideas into <span class="gradient-text">production-ready prompts</span></h1>
+        <p class="mt-0.5 text-sm text-tertiary">Generator · Templates · Analyzer — all in your browser.</p>
+      </div>
+
+      <!-- Method tabs -->
+      <div class="border-b border-default flex overflow-x-auto" id="method-tabs">
+        <button class="tab-btn active shrink-0" data-method="generator">
+          <span class="hidden sm:inline">Goal-to-Prompt Generator</span>
+          <span class="sm:hidden">Generator</span>
+        </button>
+        <button class="tab-btn shrink-0" data-method="templates">
+          <span class="hidden sm:inline">Prompt Templates Library</span>
+          <span class="sm:hidden">Templates</span>
+        </button>
+        <button class="tab-btn shrink-0" data-method="analyzer">
+          <span class="hidden sm:inline">Prompt Analyzer & Optimizer</span>
+          <span class="sm:hidden">Analyzer</span>
+        </button>
+      </div>
+
+      <!-- Panels -->
+      <div class="mt-5 sm:mt-6">
+
+        <!-- ━━━━━━ METHOD 1: GENERATOR ━━━━━━ -->
+        <div id="panel-generator" class="method-panel">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="lg:col-span-2 space-y-4 sm:space-y-5">
+
+              <div class="card">
+                <div class="card-header">Prompt Framework</div>
+                <div class="card-content">
+                  <div class="flex flex-wrap gap-1.5 sm:gap-2" id="framework-selector">
+                    <button class="btn-ghost active" data-framework="CO-STAR">CO-STAR</button>
+                    <button class="btn-ghost" data-framework="RISEN">RISEN</button>
+                    <button class="btn-ghost" data-framework="CRAFT">CRAFT</button>
+                    <button class="btn-ghost" data-framework="ORACLE">ORACLE</button>
+                    <button class="btn-ghost" data-framework="RACE">RACE</button>
+                    <button class="btn-ghost" data-framework="CARE">CARE</button>
+                    <button class="btn-ghost" data-framework="APE">APE</button>
+                    <button class="btn-ghost" data-framework="CREATE">CREATE</button>
+                    <button class="btn-ghost" data-framework="TAG">TAG</button>
+                    <button class="btn-ghost" data-framework="CREO">CREO</button>
+                    <button class="btn-ghost" data-framework="RISE">RISE</button>
+                    <button class="btn-ghost" data-framework="PAIN">PAIN</button>
+                    <button class="btn-ghost" data-framework="COAST">COAST</button>
+                    <button class="btn-ghost" data-framework="Freeform">Freeform</button>
+                  </div>
+                  <p class="mt-2 text-xs text-tertiary" id="framework-desc">Context, Objective, Style, Tone, Audience, Response</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">Target Model</div>
+                <div class="card-content">
+                  <div class="flex flex-wrap gap-1.5 sm:gap-2" id="model-selector">
+                  </div>
+                  <p class="mt-2 text-xs text-tertiary" id="model-desc">Optimized for GPT-4o</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header flex items-center justify-between">
+                  <span>Variables</span>
+                  <span class="badge" id="field-count">6 fields</span>
+                </div>
+                <div class="card-content space-y-3" id="variable-fields">
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header flex items-center justify-between">
+                  <span>Compiled Prompt</span>
+                  <div class="flex items-center gap-2">
+                    <button class="btn-ghost" id="btn-gen-copy">Copy</button>
+                    <button class="btn-ghost" id="btn-gen-share">Share URL</button>
+                  </div>
+                </div>
+                <div class="p-3">
+                  <textarea class="input-mono min-h-[180px] sm:min-h-[200px] rounded-none border-0" id="gen-output" readonly placeholder="Fill in the variables above to generate a structured prompt..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4 sm:space-y-5">
+              <div class="card">
+                <div class="card-header">Response Text Sanitizer</div>
+                <div class="card-content-sm space-y-3">
+                  <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-input" placeholder="Paste raw AI output here..."></textarea>
+                  <div class="flex flex-wrap gap-1.5">
+                    <button class="btn-ghost" id="sani-backticks">Strip Backticks</button>
+                    <button class="btn-ghost" id="sani-fluff">Remove AI Fluff</button>
+                    <button class="btn-ghost" id="sani-spaces">Collapse Spaces</button>
+                    <button class="btn-ghost" id="sani-markdown">Strip Markdown</button>
+                    <button class="btn-ghost" id="sani-quotes">Fix Smart Quotes</button>
+                    <button class="btn-ghost" id="sani-unicode">Strip Unicode</button>
+                  </div>
+                  <div class="relative">
+                    <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-output" readonly placeholder="Cleaned output will appear here..."></textarea>
+                    <button class="btn-ghost absolute right-1.5 top-1.5" id="sani-copy">Copy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ━━━━━━ METHOD 2: TEMPLATES ━━━━━━ -->
+        <div id="panel-templates" class="method-panel hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div class="lg:col-span-1">
+              <div class="card">
+                <div class="card-header">Categories</div>
+                <div class="max-h-[300px] sm:max-h-none overflow-y-auto p-2 space-y-1" id="category-list">
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-3 space-y-4 sm:space-y-5">
+              <div class="card">
+                <div class="card-header flex items-center justify-between">
+                  <span id="template-category-label">Writing & Content</span>
+                  <span class="badge" id="template-count">0 templates</span>
+                </div>
+                <div class="card-content">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="template-grid">
+                  </div>
+                </div>
+              </div>
+              <div class="card hidden" id="template-detail">
+                <div class="card-header flex items-center justify-between">
+                  <span id="template-detail-title">Template</span>
+                  <button class="btn-ghost" id="btn-template-back">Back</button>
+                </div>
+                <div class="card-content space-y-3" id="template-fields">
+                </div>
+                <div class="p-3">
+                  <textarea class="input-mono min-h-[120px] sm:min-h-[150px] rounded-none border-0" id="template-output" readonly placeholder="Fill template fields to generate a prompt..."></textarea>
+                </div>
+                <div class="border-t border-default px-3 py-2 flex justify-end gap-2">
+                  <button class="btn-ghost" id="btn-template-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ━━━━━━ METHOD 3: ANALYZER ━━━━━━ -->
+        <div id="panel-analyzer" class="method-panel hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="lg:col-span-2 space-y-4 sm:space-y-5">
+              <div class="card">
+                <div class="card-header">Paste Your Prompt</div>
+                <div class="card-content space-y-3">
+                  <textarea class="input-mono min-h-[200px] sm:min-h-[250px]" id="analyzer-input" placeholder="Paste any prompt here to analyze its quality and get suggestions for improvement..."></textarea>
+                  <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <button class="btn-primary" id="btn-analyze">Analyze</button>
+                    <span class="text-xs text-tertiary" id="analyzer-char-count">0 characters</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card hidden" id="analyzer-improved-card">
+                <div class="card-header">Suggested Improvement</div>
+                <div class="p-3">
+                  <textarea class="input-mono min-h-[150px] sm:min-h-[200px] rounded-none border-0" id="analyzer-improved" readonly></textarea>
+                </div>
+                <div class="border-t border-default px-3 py-2 flex flex-wrap justify-end gap-2">
+                  <button class="btn-ghost" id="btn-analyzer-copy">Copy</button>
+                  <button class="btn-ghost" id="btn-analyzer-use">Use in Generator</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4 sm:space-y-5">
+              <div class="card" id="analyzer-score-card">
+                <div class="card-header">Quality Score</div>
+                <div class="card-content flex flex-col items-center">
+                  <div class="score-ring" id="score-ring">
+                    <svg width="100" height="100" viewBox="0 0 120 120" class="sm:w-[120px] sm:h-[120px]">
+                      <circle class="score-ring-bg" cx="60" cy="60" r="52" />
+                      <circle class="score-ring-fill" id="score-ring-fill" cx="60" cy="60" r="52"
+                        stroke="currentColor"
+                        stroke-dasharray="326.7"
+                        stroke-dashoffset="326.7" />
+                    </svg>
+                    <span class="absolute text-xl sm:text-2xl font-semibold text-primary" id="score-value">--</span>
+                  </div>
+                  <p class="mt-3 text-sm text-tertiary text-center" id="score-label">Enter a prompt to begin</p>
+                  <div class="mt-4 w-full space-y-2">
+                    <div class="flex justify-between text-xs text-secondary">
+                      <span>Words</span>
+                      <span id="score-words">0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">Criteria Breakdown</div>
+                <div class="card-content-sm space-y-2" id="criteria-list">
+                  <p class="text-xs text-tertiary">Run an analysis to see results.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">Suggestions</div>
+                <div class="card-content-sm space-y-2" id="suggestions-list">
+                  <p class="text-xs text-tertiary">Run an analysis to see suggestions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══════ USEFUL PROMPTS ═══════ -->
+      <div class="mt-10 sm:mt-12 pt-5 sm:pt-6 border-t border-default" id="section-prompts">
+        <h2 class="text-lg sm:text-xl font-semibold tracking-tight text-primary">Useful Ready-to-Use Prompts</h2>
+        <p class="mt-1 text-sm text-tertiary">Click any prompt to reveal the full text, then copy it. <a href="/prompts" class="text-accent hover:text-accent-hover underline">View all prompts &rarr;</a></p>
+        <div class="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="prompts-section"></div>
+      </div>
+
+      <!-- ═══════ FOOTER ═══════ -->
+      <footer class="mt-10 sm:mt-12 border-t border-default">
+        <div class="py-5 sm:py-6">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2 text-xs text-tertiary">
+              <span>Free Prompt Studio</span>
+              <span class="text-border">·</span>
+              <span>100% browser · Free</span>
+            </div>
+            <nav class="flex items-center gap-4 text-xs text-secondary">
+              <a href="/terms" class="hover:text-primary transition-colors">Terms</a>
+              <a href="/privacy" class="hover:text-primary transition-colors">Privacy</a>
+              <a href="/faq" class="hover:text-primary transition-colors">FAQ</a>
+            </nav>
+          </div>
+          <p class="mt-3 text-[10px] text-tertiary text-center sm:text-left">100% static — runs entirely in your browser. No data is sent to any server.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module">
+      // ── Theme toggle ──
+      (() => {
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+        function setTheme(theme) {
+          html.classList.toggle('light', theme === 'light');
+          html.classList.toggle('dark', theme !== 'light');
+          sunIcon.classList.toggle('hidden', theme === 'light');
+          moonIcon.classList.toggle('hidden', theme !== 'light');
+          try { localStorage.setItem('theme', theme); } catch {}
+        }
+        const saved = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
+        setTheme(saved === 'light' ? 'light' : 'dark');
+        themeToggle.addEventListener('click', () => setTheme(html.classList.contains('light') ? 'dark' : 'light'));
+      })();
+
+      import { FRAMEWORKS, FRAMEWORK_META, compileFramework, getModels } from '../lib/frameworks.js';
+      import { TEMPLATE_CATEGORIES, TEMPLATES, getTemplatesByCategory, getTemplateById } from '../lib/templates.js';
+      import { analyzePrompt } from '../lib/analyzer.js';
+      import { stripBackticks, removeFluff, collapseSpaces, stripMarkdown, fixSmartQuotes, stripUnicode } from '../lib/sanitizer.js';
+      import { pushStateToURL, getStateFromURL } from '../lib/urlEncoder.js';
+      import { PROMPTS, getPromptsByCategory } from '../lib/prompts.js';
+
+      // ── Logo scroll-to-top ──
+      document.getElementById('logo-btn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ── Nav / tab switching ──
+      const navLinks = document.querySelectorAll('[data-nav]');
+      const methodTabs = document.querySelectorAll('[data-method]');
+      const panels = {
+        generator: document.getElementById('panel-generator'),
+        templates: document.getElementById('panel-templates'),
+        analyzer: document.getElementById('panel-analyzer'),
+      };
+
+      function switchMethod(method) {
+        Object.keys(panels).forEach(key => panels[key].classList.toggle('hidden', key !== method));
+        methodTabs.forEach(t => t.classList.toggle('active', t.dataset.method === method));
+        navLinks.forEach(n => n.classList.toggle('active', n.dataset.nav === method));
+        promptsDropdown.classList.add('hidden');
+      }
+
+      methodTabs.forEach(tab => tab.addEventListener('click', () => switchMethod(tab.dataset.method)));
+      navLinks.forEach(link => link.addEventListener('click', () => switchMethod(link.dataset.nav)));
+
+      // ── Generator ──
+      let selectedFramework = FRAMEWORKS.COSTAR;
+      let selectedModel = 'chatgpt';
+      let frameworkValues = {};
+
+      const frameworkBtns = document.querySelectorAll('#framework-selector .btn-ghost');
+      const frameworkDesc = document.getElementById('framework-desc');
+      const varFields = document.getElementById('variable-fields');
+      const fieldCount = document.getElementById('field-count');
+      const genOutput = document.getElementById('gen-output');
+      const btnGenCopy = document.getElementById('btn-gen-copy');
+      const btnGenShare = document.getElementById('btn-gen-share');
+      const modelSelector = document.getElementById('model-selector');
+      const modelDesc = document.getElementById('model-desc');
+
+      const MODELS = getModels();
+      modelSelector.innerHTML = MODELS.map(m =>
+        `<button class="btn-ghost ${m.id === selectedModel ? 'active' : ''}" data-model="${m.id}">${m.label}</button>`
+      ).join('');
+      modelSelector.querySelectorAll('.btn-ghost').forEach(btn => btn.addEventListener('click', () => {
+        modelSelector.querySelectorAll('.btn-ghost').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedModel = btn.dataset.model;
+        const m = MODELS.find(x => x.id === selectedModel);
+        if (m) modelDesc.textContent = m.desc;
+        compileGenerator();
+      }));
+
+      function renderFields(framework) {
+        const meta = FRAMEWORK_META[framework];
+        if (!meta) return;
+        frameworkDesc.textContent = meta.full;
+        fieldCount.textContent = meta.fields.length + ' fields';
+        varFields.innerHTML = meta.fields.map(f => {
+          const val = frameworkValues[f.key] || '';
+          return `<div class="mb-3">
+            <label class="block text-xs font-medium text-secondary mb-1">${f.label}</label>
+            <input class="input-default" data-fkey="${f.key}" type="text" value="${val.replace(/"/g, '&quot;')}" placeholder="${f.placeholder}" />
+          </div>`;
+        }).join('');
+        varFields.querySelectorAll('input').forEach(inp => inp.addEventListener('input', e => {
+          frameworkValues[e.target.dataset.fkey] = e.target.value;
+          compileGenerator();
+        }));
+        compileGenerator();
+      }
+
+      frameworkBtns.forEach(btn => btn.addEventListener('click', () => {
+        frameworkBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedFramework = btn.dataset.framework;
+        renderFields(selectedFramework);
+      }));
+
+      function compileGenerator() {
+        genOutput.value = compileFramework(selectedFramework, frameworkValues, selectedModel);
+      }
+
+      btnGenCopy.addEventListener('click', async () => {
+        if (!genOutput.value) return;
+        try { await navigator.clipboard.writeText(genOutput.value); } catch { genOutput.select(); document.execCommand('copy'); }
+        const orig = btnGenCopy.textContent;
+        btnGenCopy.textContent = 'Copied!';
+        setTimeout(() => { btnGenCopy.textContent = orig; }, 1500);
+      });
+
+      btnGenShare.addEventListener('click', () => {
+        if (!Object.values(frameworkValues).some(v => v && v.trim())) return;
+        pushStateToURL({ tool: 'generator', framework: selectedFramework, values: frameworkValues });
+        const orig = btnGenShare.textContent;
+        btnGenShare.textContent = 'URL Updated!';
+        setTimeout(() => { btnGenShare.textContent = orig; }, 1500);
+      });
+
+      // ── Templates ──
+      let activeCategory = 'writing';
+      let activeTemplate = null;
+      let templateValues = {};
+
+      const categoryList = document.getElementById('category-list');
+      const templateGrid = document.getElementById('template-grid');
+      const templateCategoryLabel = document.getElementById('template-category-label');
+      const templateCount = document.getElementById('template-count');
+      const templateDetail = document.getElementById('template-detail');
+      const templateDetailTitle = document.getElementById('template-detail-title');
+      const templateFields = document.getElementById('template-fields');
+      const templateOutput = document.getElementById('template-output');
+      const btnTemplateBack = document.getElementById('btn-template-back');
+      const btnTemplateCopy = document.getElementById('btn-template-copy');
+
+      function renderCategories() {
+        categoryList.innerHTML = TEMPLATE_CATEGORIES.map(c =>
+          `<button class="template-card w-full text-left flex items-center gap-2 ${c.id === activeCategory ? 'active' : ''}" data-cat="${c.id}">
+            <span class="text-sm">${c.icon}</span>
+            <span class="text-sm text-primary">${c.label}</span>
+          </button>`
+        ).join('');
+        categoryList.querySelectorAll('[data-cat]').forEach(btn => btn.addEventListener('click', () => {
+          categoryList.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeCategory = btn.dataset.cat;
+          activeTemplate = null;
+          templateDetail.classList.add('hidden');
+          renderTemplates();
+        }));
+      }
+
+      function renderTemplates() {
+        const templates = getTemplatesByCategory(activeCategory);
+        const cat = TEMPLATE_CATEGORIES.find(c => c.id === activeCategory);
+        templateCategoryLabel.textContent = cat ? cat.label : 'Templates';
+        templateCount.textContent = templates.length + ' templates';
+        templateGrid.innerHTML = templates.map(t =>
+          `<div class="template-card ${activeTemplate === t.id ? 'active' : ''}" data-tid="${t.id}">
+            <h3 class="text-sm font-medium text-primary">${t.title}</h3>
+            <p class="mt-1 text-xs text-secondary leading-relaxed">${t.description}</p>
+          </div>`
+        ).join('');
+        templateGrid.querySelectorAll('[data-tid]').forEach(card => card.addEventListener('click', () => selectTemplate(card.dataset.tid)));
+      }
+
+      function selectTemplate(id) {
+        activeTemplate = id;
+        templateValues = {};
+        const tpl = getTemplateById(id);
+        if (!tpl) return;
+        templateGrid.querySelectorAll('[data-tid]').forEach(c => c.classList.remove('active'));
+        const card = templateGrid.querySelector(`[data-tid="${id}"]`);
+        if (card) card.classList.add('active');
+        templateDetail.classList.remove('hidden');
+        templateDetailTitle.textContent = tpl.title;
+        templateOutput.value = '';
+        templateFields.innerHTML = tpl.fields.map(f => {
+          const label = `<label class="block text-xs font-medium text-secondary mb-1">${f.label}</label>`;
+          if (f.type === 'select') {
+            const opts = (f.options || []).map(o => `<option value="${o}">${o}</option>`).join('');
+            return `<div class="mb-3">${label}<select class="input-default" data-tkey="${f.key}"><option value="">Select ${f.label.toLowerCase()}...</option>${opts}</select></div>`;
+          }
+          if (f.type === 'textarea') {
+            return `<div class="mb-3">${label}<textarea class="input-default min-h-[80px]" data-tkey="${f.key}" placeholder="Enter ${f.label.toLowerCase()}..."></textarea></div>`;
+          }
+          return `<div class="mb-3">${label}<input class="input-default" data-tkey="${f.key}" type="text" placeholder="Enter ${f.label.toLowerCase()}..." /></div>`;
+        }).join('');
+        templateFields.querySelectorAll('[data-tkey]').forEach(el => {
+          const ev = el.tagName === 'SELECT' ? 'change' : 'input';
+          el.addEventListener(ev, e => {
+            templateValues[e.target.dataset.tkey] = e.target.value;
+            compileTemplate(tpl);
+          });
+        });
+      }
+
+      function compileTemplate(tpl) {
+        const v = templateValues;
+        let output = '';
+
+        switch (tpl.id) {
+          case 'blog-post': {
+            if (!v.topic) break;
+            output = `You are an expert content writer. Write a comprehensive blog post about "${v.topic}".
+
+Context: The post targets ${v.audience || 'general readers'} and aims to inform, engage, and drive action.
+Tone: ${v.tone || 'Professional'}. ${v.wordCount ? `Target Length: ${v.wordCount}` : ''}
+
+Structure Requirements:
+- Engaging introduction that hooks the reader and states the thesis
+- 3-5 well-organized body sections with clear subheadings
+- Supporting evidence, examples, data, or expert quotes
+- Counterarguments or alternative perspectives
+- Strong conclusion with key takeaways and actionable insights
+- Clear call-to-action at the end
+
+Constraints:
+- Do not use jargon without explanation
+- Keep paragraphs short for readability
+- Each section must include at least one specific example or data point
+- Avoid promotional language — focus on providing value
+- Format with bullet points or numbered lists where appropriate`;
+            break;
+          }
+          case 'email-draft': {
+            if (!v.recipient) break;
+            const tone = v.tone ? v.tone.toLowerCase() : 'professional';
+            output = `You are a professional business communicator. Draft an email regarding ${v.purpose || 'the following matter'}.
+
+Context: You are writing to ${v.recipient} with a ${tone} tone. The email should clearly convey its purpose and drive the desired action.
+
+Subject: [${v.purpose || 'Update'}] — [Generate compelling subject line]
+
+Dear ${v.recipient},
+
+I hope this message finds you well. I'm writing to discuss ${v.purpose || 'the following matter'}.${v.keyPoints ? `\n\nKey details:\n${v.keyPoints}` : ''}
+
+Tone: ${tone}
+Constraints:
+- Keep the message concise and focused — do not exceed 3-4 paragraphs
+- Include specific next steps or action items
+- Maintain a ${tone} tone throughout
+- Avoid unnecessary jargon or overly complex language
+- End with a clear call to action
+
+Please let me know if you have any questions or would like to discuss further.
+
+Best regards,
+[Your Name]
+[Your Title]
+[Your Contact Information]`;
+            break;
+          }
+          case 'copywriting': {
+            if (!v.product) break;
+            output = `You are an expert copywriter and marketing strategist. Write persuasive copy for ${v.product}.
+
+Context: The copy targets ${v.audience || 'ideal customers'} with the core benefit of ${v.benefit || 'solving a key problem'}. The goal is to drive conversions through the ${v.cta || 'primary call to action'}.
+
+Copy Structure (AIDA Framework):
+1. ATTENTION — Open with a powerful hook that grabs attention
+2. INTEREST — Build interest by highlighting the core benefit: ${v.benefit || 'the main advantage'}
+3. DESIRE — Create desire through benefits, social proof, and emotional triggers
+4. ACTION — Drive action with a clear, compelling CTA: ${v.cta || 'the next step'}
+
+Constraints:
+- Speak directly to ${v.audience || 'the target audience'} using "you" and "your"
+- Focus on benefits, not just features — explain why each feature matters
+- Use persuasive language and power words
+- Keep paragraphs short and scannable — no more than 3 sentences each
+- End with urgency or a reason to act now
+- Do not use vague claims — support each assertion with a specific benefit
+- Tone: Persuasive, benefit-focused, action-oriented. Avoid being overly salesy`;
+            break;
+          }
+          case 'newsletter': {
+            if (!v.topic) break;
+            output = `You are an engaging newsletter editor. Create an edition about ${v.topic}.
+
+Context: This newsletter is written for ${v.audience || 'subscribers'} who are interested in ${v.topic}. The goal is to inform, entertain, and build a loyal readership.
+
+Structure:
+- Catchy subject line (under 50 characters)
+- Brief personal opening or greeting that connects with readers
+${v.sections ? `- Sections to include:\n${v.sections}\n` : '- 2-3 main content sections with clear takeaways\n'}${v.cta ? `- Call to action: ${v.cta}\n` : '- Clear call-to-action\n'}- Brief sign-off with social links or next-edition teaser
+
+Constraints:
+- Use a conversational, friendly tone throughout
+- Keep paragraphs short for email reading — max 3 sentences each
+- Use bullet points for key information
+- Do not exceed 5-7 total sections including opening and closing
+- Include a personal touch or anecdote to connect with readers
+- Tone: Warm, approachable, and authentic. Write as if to a friend.`;
+            break;
+          }
+          case 'code-review': {
+            if (!v.codeContext) break;
+            output = `You are a senior software engineer. Analyze the following code: ${v.codeContext}
+
+Context: The codebase is written in ${v.language || 'the specified language/stack'}. The review must focus on ${v.focus || 'general code quality and best practices'}. ${v.constraints ? `Additional constraints: ${v.constraints}` : ''}
+
+Review Checklist — evaluate each area and provide specific feedback:
+- Code correctness and logic errors — identify any bugs or edge cases
+- Performance considerations — flag inefficient algorithms or resource usage
+- Security vulnerabilities — check for injection risks, data exposure, or auth flaws
+- Code style and conventions — verify consistency with project standards
+- Error handling and edge cases — ensure all failure modes are handled
+- Documentation and comments — assess clarity and completeness
+- Test coverage suggestions — recommend specific test cases to add
+
+Constraints:
+- Provide specific, actionable feedback for each issue found — not just what is wrong but how to fix it
+- Include code examples showing the recommended fix
+- Prioritize issues by severity: critical, major, minor
+- Do not make assumptions — ask clarifying questions when needed
+- Tone: Constructive, professional, and collaborative. Focus on improving the code, not criticizing the author
+
+Format: Produce a structured review with severity labels and suggested fixes for each issue.`;
+            break;
+          }
+          case 'debug-assist': {
+            if (!v.symptom) break;
+            output = `You are an expert debugging engineer. Analyze and fix the following issue.
+
+Context: The bug occurs in ${v.language || 'the specified language/framework'}. The symptom is: ${v.symptom}. ${v.tried ? 'The following approaches have already been attempted: ' + v.tried : 'No debugging attempts have been made yet.'}
+
+${v.code ? `Relevant Code:\n\`\`\`\n${v.code}\n\`\`\`\n` : ''}
+Your task — help resolve this issue by providing:
+1. Root cause analysis — identify what is causing the bug and why
+2. Fix recommendation — provide corrected code or configuration changes
+3. Prevention strategy — suggest testing patterns or code changes to avoid similar issues
+
+Constraints:
+- Explain the root cause in clear terms before providing the fix
+- Provide complete, working code examples — not pseudocode
+- Consider edge cases and error states
+- Do not suggest overly complex solutions — prefer minimal, targeted fixes
+- If multiple possible causes exist, list them in order of likelihood
+- Tone: Analytical, methodical, and educational. Explain your reasoning step by step.
+
+Output Format: Provide a root cause analysis, a specific fix recommendation with code examples, and a prevention strategy in clearly labeled sections.`;
+            break;
+          }
+          case 'api-design': {
+            if (!v.purpose) break;
+            output = `You are a senior API architect. Design an API for: ${v.purpose}
+
+Context: The API uses the ${v.pattern || 'REST'} pattern on ${v.tech || 'the specified tech stack'}. Key resources to model include: ${v.resources || 'the core domain entities'}.
+
+Design Requirements:
+- Follow ${v.pattern || 'RESTful'} conventions and best practices — use proper HTTP methods and status codes
+- Define clear endpoint naming and versioning strategy (e.g., /api/v1/resources)
+- Include request/response schemas for each endpoint with required and optional fields
+- Plan authentication and authorization model (JWT, OAuth, API keys)
+- Consider pagination, filtering, and sorting for list endpoints
+- Document error handling with consistent error response format
+- Include rate limiting considerations
+
+Output Format: For each endpoint, provide:
+- HTTP method and URL path
+- Request body schema with field types and constraints
+- Response schema with status codes
+- Example request and response bodies
+
+Constraints:
+- Follow the ${v.pattern || 'REST'} pattern consistently — do not mix patterns
+- Ensure all endpoints follow RESTful naming conventions (nouns, not verbs)
+- Include at least one example of error handling
+- Consider idempotency for PUT and DELETE operations
+- Tone: Technical, precise, and specification-oriented. Use standard API documentation format.`;
+            break;
+          }
+          case 'architecture': {
+            if (!v.goal) break;
+            output = `You are a senior systems architect. Design a solution for:
+${v.goal}
+
+Context: ${v.constraints ? 'Constraints: ' + v.constraints : 'The system must balance scalability, cost, and maintainability.'} ${v.stack ? 'Preferred Stack: ' + v.stack : ''} Key concerns to address: ${v.concerns || 'performance, reliability, and security'}
+
+Architecture Requirements:
+- High-level system diagram description showing all major components and their interactions
+- Component breakdown with clear responsibilities and boundaries
+- Data flow between services — synchronous vs asynchronous communication
+- Storage and caching strategy — database choices, cache layers, data partitioning
+- Scalability and performance considerations — horizontal vs vertical scaling
+- Security architecture — authentication, authorization, encryption, network segmentation
+- Monitoring and observability — logging, metrics, alerting, tracing
+- Trade-offs and alternatives considered with rationale for chosen approach
+
+Output Format: Provide a structured architecture document with:
+1. Overview of architecture pattern (microservices, monolithic, event-driven, etc.) with justification
+2. Detailed component descriptions with responsibilities
+3. Data model overview highlighting key entities and relationships
+4. API gateway and service communication strategy
+5. Deployment and infrastructure considerations with cloud provider specifics
+
+Constraints:
+- Address each key concern explicitly with a specific design decision
+- Do not introduce unnecessary complexity — prefer simple solutions where adequate
+- Consider failure modes and include resilience patterns
+- Tone: Analytical, systematic, and decision-oriented. Explain why each choice was made.`;
+            break;
+          }
+          case 'ad-copy': {
+            if (!v.product) break;
+            output = `You are an expert advertising copywriter. Write high-converting ad copy for ${v.product}.
+
+Context: The ad will run on ${v.platform || 'multiple platforms'} targeting ${v.audience || 'the target audience'}. The key angle is ${v.angle || 'the main selling point'}.
+
+Ad Copy Requirements:
+- Attention-grabbing headline (under 80 characters) that stops the scroll
+- Benefit-driven body copy (50-150 words depending on the platform)
+- Clear value proposition that differentiates from competitors
+- Social proof or credibility signal (testimonial, statistic, certification)
+- Strong call-to-action: "${v.cta || 'Get Started'}"
+
+${v.platform ? `Platform-Specific Constraints for ${v.platform}:
+- Respect ${v.platform} character limits and ad format requirements
+- Use ${v.platform}-specific formatting and best practices
+- Include relevant hashtags or keywords for discoverability
+- Optimize for ${v.platform} audience behavior and consumption patterns` : ''}
+
+General Constraints:
+- Open with a hook in the first line — do not bury the lede
+- Focus on one primary benefit per ad — do not overwhelm with features
+- Use active voice and power words throughout
+- End with urgency or a time-limited reason to act
+- Tone: Persuasive, benefit-focused, action-oriented. Match the brand voice.
+
+Output Format: Structured ad copy with an attention-grabbing headline, benefit-driven body copy, and a compelling call-to-action.`;
+            break;
+          }
+          case 'seo-content': {
+            if (!v.keyword) break;
+            output = `You are an SEO content strategist. Create an optimized content brief for the keyword: "${v.keyword}"
+
+Context: The search intent is ${v.intent || 'informational'} — users searching for "${v.keyword}" want ${v.intent === 'Transactional' ? 'to make a purchase decision' : v.intent === 'Navigational' ? 'to find a specific page' : v.intent === 'Commercial' ? 'to compare options' : 'to learn more about the topic'}.
+
+${v.competitors ? `Competitor Analysis to differentiate from:\n${v.competitors}\n` : ''}${v.angle ? `Unique Angle: ${v.angle}\n` : ''}
+
+Content Structure:
+1. Compelling H1 title with primary keyword near the beginning
+2. Engaging introduction that directly answers user intent
+3. Well-structured body with H2/H3 subheadings containing related keywords
+4. FAQ section targeting featured snippet opportunities (3-5 questions)
+5. Conclusion with key takeaways and next steps
+
+On-Page Optimization Requirements:
+- Meta title: 50-60 characters including the target keyword
+- Meta description: 150-160 characters with a compelling value proposition
+- URL slug: short, keyword-rich, hyphenated
+- Image alt text opportunities for 2-3 relevant images
+- Internal linking suggestions to 2-3 related articles
+- Readability target: Grade 8-10 level using the Flesch-Kincaid scale
+
+Constraints:
+- Use the target keyword in H1, first paragraph, and naturally in 2-3 subheadings
+- Do not keyword stuff — use semantic variations and LSI terms
+- Include at least one data point or statistic to support claims
+- Keep paragraphs under 4 sentences for readability
+- Tone: Authoritative, helpful, and accessible. Match the brand voice while maintaining SEO best practices.`;
+            break;
+          }
+          case 'landing-page': {
+            if (!v.offer) break;
+            output = `You are a conversion copywriter. Write high-converting landing page copy for: ${v.offer}
+
+Context: The page targets ${v.audience || 'target customers'} who are considering ${v.offer}. The unique selling proposition is ${v.usp || 'the key differentiator that sets this offer apart'}.
+
+Landing Page Structure:
+
+1. HERO SECTION
+   - Headline: Clear, benefit-driven statement about ${v.offer}
+   - Subheadline: Supporting value proposition that reinforces the headline
+   - Primary CTA button: "${v.cta || 'Get Started'}"
+
+2. PROBLEM/AGITATION
+   - Identify the specific pain point or unmet need
+   - Agitate the problem to create urgency and emotional investment
+   - Use a relatable scenario or question
+
+3. SOLUTION
+   - Present ${v.offer} as the natural solution
+   - Highlight ${v.usp || 'key benefits and features'} with specific outcomes
+   - Include 2-3 concrete examples of results or use cases
+
+4. SOCIAL PROOF
+   - Include testimonials, statistical results, or trust signals
+   - Feature a case study or before/after comparison
+
+5. OBJECTION HANDLING
+   - Address 2-3 most common objections head-on
+   - Offer guarantees, risk reversal, or free trials
+
+6. FINAL CTA
+   - Reinforce the value proposition
+   - Strong, action-oriented CTA button with benefit-driven text
+
+Constraints:
+- Keep the hero section above the fold — no scrolling required to see headline and CTA
+- Use short paragraphs (1-3 sentences) and plenty of whitespace
+- Each section must support the single conversion goal
+- Include at least one trust signal (testimonial, statistic, certification badge)
+- Do not include navigation links that distract from conversion
+- Tone: Persuasive, confident, customer-focused. Write in second person ("you") throughout.`;
+            break;
+          }
+          case 'midjourney-prompt': {
+            if (!v.subject) break;
+            const s = v.style ? `, in the style of ${v.style}` : '';
+            const m = v.mood ? `, ${v.mood.toLowerCase()} lighting and atmosphere` : '';
+            const c = v.colors ? `, ${v.colors} color palette` : '';
+            output = `You are an expert AI image prompt engineer. Generate a detailed Midjourney prompt.
+
+Context: The goal is to generate a high-quality image of: ${v.subject}${s}${m}${c}.
+
+Constraints:
+- The image must be photorealistic with cinematic quality
+- Use descriptive language that guides the AI toward the desired artistic style
+- Avoid abstract or ambiguous terms — be specific about visual elements
+- The prompt should produce a cohesive composition with clear foreground, subject, and background
+
+Format: Use comma-separated descriptive phrases followed by technical parameters.
+Tone: Evocative, precise, and visually descriptive.
+
+${v.subject}${s}${m}${c}, highly detailed, 8k resolution, professional photography --ar 16:9 --v 6.0`;
+            break;
+          }
+          case 'dalle-prompt': {
+            if (!v.scene) break;
+            const s = v.style ? ` in ${v.style} style` : '';
+            const c = v.colors ? `, ${v.colors} color scheme` : '';
+            const m = v.mood ? `, ${v.mood.toLowerCase()} atmosphere` : '';
+            output = `You are an expert prompt engineer creating a detailed DALL-E image generation prompt.
+
+Context: The image should depict ${v.scene}${s}${c}${m}. The goal is to produce a visually striking, compositionally strong image.
+
+Constraints:
+- Use specific visual details rather than vague descriptors
+- Guide the composition — specify what appears in foreground, midground, and background
+- Include lighting direction and quality (e.g., soft diffused light, dramatic backlighting)
+- Avoid text or readable characters in the generated image
+
+Format: Start with the main subject and scene, then layer in style, color, mood, and quality parameters.
+Tone: Visually descriptive and technically precise.
+
+Create an image of ${v.scene}${s}${c}${m}. High quality, detailed, 4k resolution, professional composition.`;
+            break;
+          }
+          case 'swot-analysis': {
+            if (!v.business) break;
+            output = `You are a business strategy consultant. Analyze ${v.business} using a comprehensive SWOT framework.
+
+Context: This analysis is set in the context of ${v.market || 'the current market conditions'} with a focus on ${v.focus || 'overall business assessment'}. The analysis will inform strategic decision-making.
+
+Analysis Framework — evaluate each quadrant thoroughly:
+
+## Strengths (Internal Positive Factors)
+- What does ${v.business} do exceptionally well?
+- What unique resources, capabilities, or intellectual property does it possess?
+- What competitive advantages does it have over rivals?
+- What do customers consistently praise?
+
+## Weaknesses (Internal Negative Factors)
+- Where does ${v.business} lag behind competitors?
+- What resource gaps or capability limitations exist?
+- What customer complaints or friction points are recurring?
+- What processes are inefficient or outdated?
+
+## Opportunities (External Positive Factors)
+- What market trends can ${v.business} capitalize on?
+- What emerging technologies or channels offer growth potential?
+- What underserved customer segments or needs exist?
+- What regulatory changes could create advantages?
+
+## Threats (External Negative Factors)
+- What competitive pressures are intensifying?
+- What market risks could impact revenue or operations?
+- What regulatory or compliance changes are on the horizon?
+- What technological disruptions could render current offerings obsolete?
+
+Constraints:
+- Provide at least 4 specific, actionable points per quadrant
+- Prioritize items within each quadrant by impact and urgency
+- Include strategic implications and recommended actions for each finding
+- Do not list generic observations — each point must be specific to ${v.business}
+- Tone: Analytical, objective, and strategic. Use business analysis terminology.`;
+            break;
+          }
+          case 'strategy-plan': {
+            if (!v.vision) break;
+            const goalsList = v.goals ? v.goals.split('\n').filter(Boolean).map(g => `- ${g}`).join('\n   ') : '- Define 3-5 key strategic objectives with measurable targets';
+            const resourcesList = v.resources ? v.resources.split('\n').filter(Boolean).map(r => `- ${r}`).join('\n   ') : '- Budget, personnel, and technology requirements to be determined';
+            output = `You are a strategic planning consultant. Develop a plan based on this vision:
+${v.vision}
+
+Context: ${v.goals ? 'Key goals have been identified and need to be operationalized.' : 'Strategic goals need to be defined from the vision statement.'} ${v.resources ? 'Available resources are allocated across the defined initiatives.' : 'Resource requirements must be assessed against the strategic objectives.'} Timeline: ${v.timeline || 'To be determined based on scope and complexity'}
+
+Strategic Plan:
+
+1. EXECUTIVE SUMMARY
+   - Vision: ${v.vision}
+   - Mission statement derived from vision
+   - 3-5 strategic objectives with expected outcomes
+
+2. SITUATION ANALYSIS
+   - Market analysis and key trends affecting the strategy
+   - Competitive landscape review
+   - Internal capabilities and gap assessment
+
+3. STRATEGIC GOALS
+   ${goalsList}
+
+4. RESOURCE ALLOCATION
+   ${resourcesList}
+
+5. IMPLEMENTATION ROADMAP
+   - Phase 1 (0-3 months): Quick wins and foundational setup
+   - Phase 2 (3-6 months): Core initiative execution
+   - Phase 3 (6-12 months): Scale, optimize, and expand
+
+6. KPIs AND METRICS
+   - Define 2-3 success metrics per strategic goal
+   - Set quarterly review cadence and reporting structure
+   - Identify leading and lagging indicators
+
+Constraints:
+- Each strategic goal must have at least one measurable KPI
+- The timeline must be realistic given available resources
+- Include risk factors and mitigation strategies for each phase
+- Consider dependencies between phases and goals
+- Tone: Strategic, confident, and action-oriented. Use business planning language.`;
+            break;
+          }
+          case 'research-paper': {
+            if (!v.topic) break;
+            output = `You are an academic research advisor. Draft a research paper on ${v.topic}.
+
+Context: The paper's thesis is: ${v.thesis || 'To be developed through the research process'}. The methodology will be ${v.methodology || 'defined based on the research questions'}.${v.sources ? ' Key sources include:\n' + v.sources : ''}
+
+Paper Structure:
+
+1. TITLE
+   - Working title that reflects the core contribution
+
+2. ABSTRACT
+   - Brief summary of research question, methods, key findings, and conclusions (150-250 words)
+
+3. INTRODUCTION
+   - Background and context for ${v.topic} — why this research matters
+   - Research problem and its significance
+   - Specific research questions or hypotheses
+   - Thesis statement: ${v.thesis || 'State your thesis'}
+   - Paper structure overview for reader orientation
+
+4. LITERATURE REVIEW
+   - Key theories and frameworks relevant to ${v.topic}
+   - Current state of research — what is known and what gaps remain
+   - How this paper addresses identified gaps
+   - Critical evaluation of prior work
+
+5. METHODOLOGY
+   - Research approach: ${v.methodology || 'Qualitative, quantitative, or mixed methods'}
+   - Data collection and sampling methods
+   - Analysis techniques and validation approach
+   - Limitations and delimitations
+
+6. FINDINGS/ANALYSIS
+   - Presentation of results with appropriate visualizations
+   - Statistical or thematic analysis
+
+7. DISCUSSION
+   - Interpretation of findings in context of existing literature
+   - Implications for theory, practice, or policy
+
+8. CONCLUSION
+   - Summary of key findings and contributions
+   - Limitations of the study
+   - Future research directions
+   - Practical or theoretical implications
+
+Constraints:
+- Each section must have a clear purpose and connection to the thesis
+- Use formal academic language throughout — do not use contractions or colloquialisms
+- Include citations in appropriate academic format (APA, MLA, Chicago)
+- Ensure logical flow between sections with clear transitions
+- Tone: Academic, objective, and authoritative. Maintain third-person perspective.`;
+            break;
+          }
+          case 'data-analysis': {
+            if (!v.dataset) break;
+            output = `You are a senior data analyst. Analyze the following dataset:
+${v.dataset}
+
+Context: The analysis aims to answer: ${v.questions || 'key questions about the data'}. The techniques to apply include: ${v.techniques || 'appropriate statistical and analytical methods'}. The desired output is ${v.output || 'a comprehensive analysis report'}.
+
+Analysis Plan:
+
+1. DATA UNDERSTANDING
+   - Assess dataset size, structure, and quality
+   - Identify variable types and distributions
+   - Evaluate missing data, outliers, and data quality issues
+
+2. EXPLORATORY ANALYSIS
+   - Compute descriptive statistics for all key variables
+   - Create visualizations: distributions, correlations, trends over time
+   - Generate initial hypotheses based on patterns observed
+
+3. ANALYSIS APPROACH
+   - Apply techniques: ${v.techniques || 'select appropriate statistical tests or ML models'}
+   - Define validation strategy (train/test split, cross-validation)
+   - Specify success criteria and significance thresholds
+
+4. KEY QUESTIONS TO ANSWER
+${v.questions ? v.questions.split('\n').filter(Boolean).map(q => `   - ${q}`).join('\n') : '   - Define primary and secondary research questions'}
+
+5. DELIVERABLES
+   - ${v.output || 'Analysis report with visualizations, key insights, and actionable recommendations'}
+   - Document code, methodology, and assumptions
+   - Include limitations and caveats
+
+Constraints:
+- Begin with data quality assessment before any analysis
+- Use appropriate statistical significance levels (p < 0.05)
+- Do not overstate conclusions — clearly separate findings from interpretations
+- Include visualization recommendations for each key finding
+- Document all assumptions and methodological choices
+- Tone: Analytical, precise, and data-driven. Use statistical terminology correctly.`;
+            break;
+          }
+          case 'lesson-plan': {
+            if (!v.topic) break;
+            output = `You are an experienced educator and curriculum designer. Create a lesson plan on ${v.topic}.
+
+Context: The lesson is designed for ${v.level || 'beginner'} level students and will run for ${v.duration || 'approximately 60 minutes'}. The learning objectives guide all instructional activities.
+
+Learning Objectives:
+${v.objectives || '- Define and explain key concepts related to ' + v.topic + '\n- Apply knowledge through practical exercises\n- Demonstrate understanding through assessment activities'}
+
+Lesson Structure:
+
+1. OPENING (5-10 minutes)
+   - Hook or attention-getter related to ${v.topic}
+   - Connect to prior knowledge and real-world relevance
+   - State learning objectives clearly
+
+2. DIRECT INSTRUCTION (15-20 minutes)
+   - Present core content with clear explanations and examples
+   - Use demonstrations, visuals, or multimedia to support learning
+   - Check for understanding every 5 minutes with quick questions
+
+3. GUIDED PRACTICE (15-20 minutes)
+   - Hands-on activity or exercise applying the concepts
+   - Work through examples together with scaffolded support
+   - Provide immediate feedback and correction
+
+4. INDEPENDENT PRACTICE (10-15 minutes)
+   - Student-led application without direct guidance
+   - Formative assessment to gauge individual understanding
+   - Differentiate tasks for varying ability levels
+
+5. CLOSING (5-10 minutes)
+   - Review and summarize key takeaways
+   - Exit ticket or quick assessment of learning objectives
+   - Preview next lesson and assign relevant practice
+
+Materials Needed:
+- [List all required materials, handouts, technology, and preparation]
+
+Assessment:
+- Formative: Observations, questioning, exit ticket
+- Summative: [Project, quiz, or performance task measuring stated objectives]
+
+Constraints:
+- Each learning objective must be addressed by at least one activity
+- Include differentiation strategies for at least two ability levels
+- Allocate time realistically — account for transitions between activities
+- Use active learning techniques — minimize lecture time
+- Tone: Instructional, clear, and engaging. Write for the educator delivering the lesson.`;
+            break;
+          }
+          case 'study-guide': {
+            if (!v.subject) break;
+            output = `You are an expert tutor and study guide creator. Create a comprehensive study guide for ${v.subject}.
+
+Context: This study guide covers ${v.topics || 'the key concepts and skills in ' + v.subject} using a ${v.format || 'comprehensive outline'} format.${v.depth ? ' Depth level: ' + v.depth : ''}
+
+Study Guide Content:
+
+1. CORE CONCEPTS
+   - Define key terminology with clear, memorable explanations
+   - Explain fundamental principles and how they connect
+   - Show relationships between concepts using diagrams or analogies
+
+2. KEY THEORIES AND FRAMEWORKS
+   - Main theories with their originators and core propositions
+   - Critical evaluation of each theory — strengths and limitations
+   - Real-world applications demonstrating each concept
+
+3. PRACTICAL APPLICATIONS
+   - Step-by-step problem-solving approaches with worked examples
+   - Common scenarios and how to handle them correctly
+   - Practice questions with detailed solutions and explanations
+
+4. STUDY AIDS
+   - Mnemonics and memory techniques for key terms
+   - Visual diagrams, mind maps, or flowcharts
+   - Key formulas, equations, or frameworks to memorize
+   - Common mistakes to avoid on exams
+
+5. REVIEW AND SELF-ASSESSMENT
+   - Chapter summaries highlighting the 3 most important takeaways each
+   - Review questions testing understanding — not just recall
+   - Practice test with answer key and explanations
+
+Constraints:
+- Each concept must include a definition, example, and connection to the broader subject
+- Avoid unnecessary details — focus on what is most testable or applicable
+- Include memory aids for at least 5 key terms or concepts
+- Provide practice questions at varying difficulty levels
+- Tone: Clear, encouraging, and pedagogically effective. Write as if tutoring a student one-on-one.`;
+            break;
+          }
+          case 'twitter-thread': {
+            if (!v.topic) break;
+            output = `You are a social media content strategist. Write an engaging Twitter/X thread about ${v.topic}.
+
+Context: The thread targets an audience interested in ${v.topic}. The goal is to educate, engage, and drive discussion. The hook should stop the scroll and compel users to read all tweets.
+
+Thread Structure:
+
+1/${v.hook || `I've been thinking about ${v.topic} and here is what I learned`}
+
+2/The most common misconception about ${v.topic}:
+[State what most people get wrong]
+
+3/[First key insight — include a specific data point, example, or framework]
+
+4/[Second key insight — build on the first with a practical takeaway]
+
+5/[Third insight — offer a counterintuitive perspective or pro tip]
+
+6/[Real example, case study, or personal experience that illustrates the point]
+
+7/[Actionable advice — something readers can apply immediately]
+
+8/Summary: [Single sentence capturing the main takeaway]
+
+${v.cta ? '\n' + v.cta : '\nWhat is your experience with this? Share your thoughts below 👇'}
+
+Constraints:
+- Each tweet must not exceed 280 characters — count carefully
+- Open with a bold, curiosity-gap hook in tweet 1
+- Number each tweet (1/8, 2/8, etc.) for clear progression
+- Use line breaks within tweets for readability
+- Limit relevant hashtags to 1-2 per tweet, 3 total across the thread
+- End with a question or CTA to drive engagement
+- Space tweets 2-3 minutes apart for maximum reach
+- Tone: Conversational, insightful, and slightly provocative. Write with authority but approachability.`;
+            break;
+          }
+          case 'linkedin-post': {
+            if (!v.topic) break;
+            output = `You are a LinkedIn content strategist and thought leader. Write a professional LinkedIn post about ${v.topic}.
+
+Context: The post targets ${v.audience || 'LinkedIn professionals'} who are interested in ${v.topic}. The goal is to spark meaningful discussion and position the author as a credible voice in the space.
+
+Personal Angle: ${v.angle || 'Share your personal experience, insight, or lesson learned'}
+
+Post Structure:
+
+HEADLINE: [First 1-3 lines that grab attention — make it bold, specific, and relatable]
+
+[Open with a personal story, observation, or surprising fact relating to ${v.topic}]
+
+[Share the key insight or lesson learned — be specific about what changed your thinking]
+
+[Provide actionable advice or a framework readers can apply today]
+
+Call to action: ${v.cta || 'Share your thoughts in the comments below — I would love to hear your perspective'}
+
+[3-5 relevant hashtags]
+
+Constraints:
+- Write in first person for authenticity and connection
+- Keep paragraphs short — maximum 3 sentences each
+- Include line breaks between sections for mobile readability
+- Lead with the most compelling idea — do not bury the lede
+- Be specific — include numbers, timelines, or concrete examples
+- Avoid corporate jargon and buzzwords — sound like a human, not a brand
+- Tag 1-2 relevant people or companies if applicable
+- Tone: Professional but conversational. Authoritative but approachable. Write to start a conversation, not make a speech.`;
+            break;
+          }
+          default: {
+            const parts = [];
+            Object.entries(v).forEach(([key, val]) => {
+              if (val && val.trim()) {
+                const field = tpl.fields.find(f => f.key === key);
+                parts.push(`${field?.label || key}: ${val}`);
+              }
+            });
+            if (parts.length > 0) {
+              output = `You are an expert in this domain.\n\nContext: The task involves ${parts[0].split(': ').slice(1).join(': ') || 'the specified topic'}.\n\nTask:\n${parts.map(p => p).join('\n')}\n\nConstraints:\n- Follow the specified format strictly\n- Provide specific, actionable output\n- Use a professional and clear tone throughout\n- Do not include unnecessary preamble or fluff`;
+            }
+            break;
+          }
+        }
+
+        templateOutput.value = output || 'Fill in the fields above to generate a prompt...';
+      }
+
+      btnTemplateBack.addEventListener('click', () => { templateDetail.classList.add('hidden'); activeTemplate = null; });
+      btnTemplateCopy.addEventListener('click', async () => {
+        if (!templateOutput.value) return;
+        try { await navigator.clipboard.writeText(templateOutput.value); } catch { templateOutput.select(); document.execCommand('copy'); }
+        const orig = btnTemplateCopy.textContent;
+        btnTemplateCopy.textContent = 'Copied!';
+        setTimeout(() => { btnTemplateCopy.textContent = orig; }, 1500);
+      });
+
+      // ── Analyzer ──
+      const analyzerInput = document.getElementById('analyzer-input');
+      const btnAnalyze = document.getElementById('btn-analyze');
+      const analyzerCharCount = document.getElementById('analyzer-char-count');
+      const scoreValue = document.getElementById('score-value');
+      const scoreLabel = document.getElementById('score-label');
+      const scoreRingFill = document.getElementById('score-ring-fill');
+      const scoreWords = document.getElementById('score-words');
+      const criteriaList = document.getElementById('criteria-list');
+      const suggestionsList = document.getElementById('suggestions-list');
+      const analyzerImprovedCard = document.getElementById('analyzer-improved-card');
+      const analyzerImproved = document.getElementById('analyzer-improved');
+      const btnAnalyzerCopy = document.getElementById('btn-analyzer-copy');
+      const btnAnalyzerUse = document.getElementById('btn-analyzer-use');
+
+      analyzerInput.addEventListener('input', () => { analyzerCharCount.textContent = analyzerInput.value.length + ' characters'; });
+
+      function getScoreColor(score) {
+        if (score >= 80) return 'oklch(0.55 0.18 145)';
+        if (score >= 60) return 'oklch(0.6 0.18 85)';
+        if (score >= 40) return 'oklch(0.65 0.18 45)';
+        return 'oklch(0.65 0.18 25)';
+      }
+
+      function getScoreCategory(score) {
+        if (score >= 80) return 'Strong';
+        if (score >= 60) return 'Good';
+        if (score >= 40) return 'Fair';
+        return 'Needs Work';
+      }
+
+      function renderAnalysis(result) {
+        const circumference = 326.7;
+        scoreRingFill.style.strokeDashoffset = circumference - (result.score / 100) * circumference;
+        scoreRingFill.style.stroke = getScoreColor(result.score);
+        scoreValue.textContent = result.score;
+        scoreLabel.textContent = `${getScoreCategory(result.score)} — ${result.feedback}`;
+        scoreWords.textContent = result.wordCount;
+
+        criteriaList.innerHTML = result.criteria.map(c =>
+          `<div class="flex items-center justify-between text-xs py-1.5 border-b border-default last:border-0">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="${c.passed ? 'text-emerald-400' : 'text-tertiary'} font-mono w-4 shrink-0">${c.passed ? '\u2713' : '\u25CB'}</span>
+              <span class="text-primary truncate">${c.label}</span>
+            </div>
+            <span class="text-secondary shrink-0 ml-2">${c.weight}%</span>
+          </div>`
+        ).join('');
+
+        if (result.improvements.length > 0) {
+          suggestionsList.innerHTML = `<p class="text-xs text-secondary mb-2">Add these missing elements to improve your prompt:</p>` +
+            result.improvements.map(s => {
+              const c = result.criteria.find(cr => cr.label === s);
+              return `<div class="flex items-start gap-2 text-xs py-1.5 border-b border-default last:border-0">
+                <span class="text-amber-400 mt-0.5 shrink-0">\u2192</span>
+                <div class="min-w-0">
+                  <span class="text-primary">${s}</span>
+                  <p class="text-tertiary mt-0.5">${c ? c.description : ''}</p>
+                </div>
+              </div>`;
+            }).join('');
+        } else {
+          suggestionsList.innerHTML = '<p class="text-xs text-emerald-400">All criteria met. Your prompt is well-structured.</p>';
+        }
+
+        if (result.score < 100) {
+          analyzerImprovedCard.classList.remove('hidden');
+          analyzerImproved.value = improvePrompt(analyzerInput.value, result);
+        } else {
+          analyzerImprovedCard.classList.add('hidden');
+        }
+      }
+
+      function improvePrompt(original, result) {
+        const imp = result.improvements;
+        let improved = original;
+        if (imp.includes('Role Assignment') && !imp.includes('Clear Objective')) improved = `You are an expert in this domain.\n\n${improved}`;
+        if (imp.includes('Background Context')) improved = `Context: Provide relevant background information here.\n\n${improved}`;
+        if (imp.includes('Constraints & Rules')) improved = `${improved}\n\nConstraints:\n- Follow the specified format strictly\n- Stay within the defined scope`;
+        if (imp.includes('Output Format')) improved = `${improved}\n\nFormat your response as specified below.`;
+        if (imp.includes('Tone & Style')) improved = `${improved}\n\nTone: Professional and clear.\nStyle: Direct and actionable.`;
+        return improved;
+      }
+
+      btnAnalyze.addEventListener('click', () => { const text = analyzerInput.value.trim(); if (text) renderAnalysis(analyzePrompt(text)); });
+      btnAnalyzerCopy.addEventListener('click', async () => {
+        if (!analyzerImproved.value) return;
+        try { await navigator.clipboard.writeText(analyzerImproved.value); } catch { analyzerImproved.select(); document.execCommand('copy'); }
+        const orig = btnAnalyzerCopy.textContent;
+        btnAnalyzerCopy.textContent = 'Copied!';
+        setTimeout(() => { btnAnalyzerCopy.textContent = orig; }, 1500);
+      });
+
+      btnAnalyzerUse.addEventListener('click', () => {
+        if (!analyzerImproved.value) return;
+        frameworkValues = {};
+        selectedFramework = FRAMEWORKS.FREE;
+        frameworkBtns.forEach(b => { b.classList.remove('active'); if (b.dataset.framework === FRAMEWORKS.FREE) b.classList.add('active'); });
+        renderFields(FRAMEWORKS.FREE);
+        const promptField = varFields.querySelector('[data-fkey="prompt"]');
+        if (promptField) { promptField.value = analyzerImproved.value; frameworkValues.prompt = analyzerImproved.value; }
+        compileGenerator();
+        switchMethod('generator');
+      });
+
+      // ── Sanitizer ──
+      const saniInput = document.getElementById('sani-input');
+      const saniOutput = document.getElementById('sani-output');
+      const saniBackticks = document.getElementById('sani-backticks');
+      const saniFluff = document.getElementById('sani-fluff');
+      const saniSpaces = document.getElementById('sani-spaces');
+      const saniCopy = document.getElementById('sani-copy');
+      const saniMarkdown = document.getElementById('sani-markdown');
+      const saniQuotes = document.getElementById('sani-quotes');
+      const saniUnicode = document.getElementById('sani-unicode');
+
+      function applySanitizer(fn) { const input = saniInput.value; if (input) saniOutput.value = fn(input); }
+      saniBackticks.addEventListener('click', () => applySanitizer(stripBackticks));
+      saniFluff.addEventListener('click', () => applySanitizer(removeFluff));
+      saniSpaces.addEventListener('click', () => applySanitizer(collapseSpaces));
+      saniMarkdown.addEventListener('click', () => applySanitizer(stripMarkdown));
+      saniQuotes.addEventListener('click', () => applySanitizer(fixSmartQuotes));
+      saniUnicode.addEventListener('click', () => applySanitizer(stripUnicode));
+      saniCopy.addEventListener('click', async () => {
+        if (!saniOutput.value) return;
+        try { await navigator.clipboard.writeText(saniOutput.value); } catch { saniOutput.select(); document.execCommand('copy'); }
+        const orig = saniCopy.textContent;
+        saniCopy.textContent = 'Copied!';
+        setTimeout(() => { saniCopy.textContent = orig; }, 1500);
+      });
+
+      // ── State from URL ──
+      const state = getStateFromURL();
+      if (state && state.tool === 'generator' && state.framework) {
+        const fb = document.querySelector(`[data-framework="${state.framework}"]`);
+        if (fb) {
+          frameworkBtns.forEach(b => b.classList.remove('active'));
+          fb.classList.add('active');
+          selectedFramework = state.framework;
+          frameworkValues = state.values || {};
+          renderFields(selectedFramework);
+        }
+        switchMethod('generator');
+      }
+
+      // ── Keyboard shortcuts ──
+      document.addEventListener('keydown', (e) => {
+        const tag = e.target.tagName;
+
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          if (!panels.generator.classList.contains('hidden') && tag === 'INPUT') {
+            e.preventDefault(); compileGenerator(); return;
+          }
+          if (!panels.analyzer.classList.contains('hidden') && tag === 'TEXTAREA') {
+            e.preventDefault(); btnAnalyze.click(); return;
+          }
+        }
+
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+          if (!panels.generator.classList.contains('hidden') && genOutput.value) { e.preventDefault(); btnGenCopy.click(); return; }
+          if (!panels.templates.classList.contains('hidden') && templateOutput.value) { e.preventDefault(); btnTemplateCopy.click(); return; }
+          if (!panels.analyzer.classList.contains('hidden') && analyzerImproved.value) { e.preventDefault(); btnAnalyzerCopy.click(); return; }
+        }
+
+        if (e.key === 'Escape') {
+          if (!templateDetail.classList.contains('hidden')) { e.preventDefault(); btnTemplateBack.click(); return; }
+        }
+
+        if (!e.ctrlKey && !e.metaKey && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+          if (e.key === '1') { e.preventDefault(); switchMethod('generator'); }
+          else if (e.key === '2') { e.preventDefault(); switchMethod('templates'); }
+          else if (e.key === '3') { e.preventDefault(); switchMethod('analyzer'); }
+        }
+      });
+
+      // ── Featured Prompts (top 6 on homepage) ──
+      const featuredIds = ['code-reviewer','blog-writer','product-description','okr-planner','explainer','content-calendar','decision-maker','design-system-guide','resume-builder','productivity','sleep-hygiene'];
+      const featured = featuredIds.map(id => PROMPTS.find(p => p.id === id)).filter(Boolean);
+      const promptsSection = document.getElementById('prompts-section');
+
+      function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      promptsSection.innerHTML = featured.map(p => {
+        const escaped = escHtml(p.prompt);
+        return `
+        <div class="template-card prompt-card">
+          <h4 class="text-sm font-medium text-primary">${escHtml(p.title)}</h4>
+          <p class="mt-1 text-xs text-secondary leading-relaxed">${escHtml(p.desc)}</p>
+          <pre class="prompt-preview hidden mt-2 p-2 rounded text-xs bg-surface leading-relaxed whitespace-pre-wrap text-secondary border border-default overflow-x-auto">${escaped}</pre>
+          <button class="btn-ghost mt-2 text-xs copy-prompt-btn" data-prompt="${escaped}">Copy Prompt</button>
+        </div>`;
+      }).join('');
+
+      document.addEventListener('click', (e) => {
+        const card = e.target.closest('.prompt-card');
+        if (card && !e.target.closest('.copy-prompt-btn')) {
+          const preview = card.querySelector('.prompt-preview');
+          if (preview) preview.classList.toggle('hidden');
+          return;
+        }
+        const copyBtn = e.target.closest('.copy-prompt-btn');
+        if (copyBtn && copyBtn.dataset.prompt) {
+          navigator.clipboard.writeText(copyBtn.dataset.prompt).catch(() => {});
+          const orig = copyBtn.textContent;
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBtn.textContent = orig; }, 1200);
+        }
+      });
+      renderCategories();
+      renderTemplates();
+      renderFields(selectedFramework);
+    </script>
+  </body>
+</html>
