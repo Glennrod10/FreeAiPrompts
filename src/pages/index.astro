@@ -6,7 +6,7 @@ import '../styles/global.css';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Free Prompt Studio — AI Prompt Generator, Templates & Analyzer</title>
+    <title>Free Prompt Studio - AI Prompt Generator, Templates & Analyzer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -16,7 +16,7 @@ import '../styles/global.css';
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="PromptGen" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="description" content="Free AI Prompt Generator — turn any idea into a structured, optimized prompt for ChatGPT, Claude, Gemini, and more. Templates, analyzer, and sanitizer included." />
+    <meta name="description" content="Free AI Prompt Generator - turn any idea into a structured, optimized prompt for ChatGPT, Claude, Gemini, and more. Templates, analyzer, and sanitizer included." />
   </head>
   <body>
     <!-- ═══════ HEADER (full width) ═══════ -->
@@ -91,7 +91,7 @@ import '../styles/global.css';
 
       <!-- Page heading -->
       <div class="pt-6 sm:pt-8 pb-3 sm:pb-4">
-        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-primary">AI Prompt Generator — <span class="gradient-text">Turn any idea into a powerful prompt</span></h1>
+        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-primary">AI Prompt Generator - <span class="gradient-text">Turn any idea into a powerful prompt</span></h1>
         <p class="mt-1 text-sm text-tertiary">Describe what you need, pick a framework, and get a structured prompt ready to use. All in your browser, always free.</p>
       </div>
 
@@ -366,7 +366,7 @@ import '../styles/global.css';
               <a href="/faq" class="hover:text-primary transition-colors py-4 min-w-[44px] text-center">FAQ</a>
             </nav>
           </div>
-          <p class="mt-3 text-[10px] text-tertiary text-center sm:text-left">100% static — runs entirely in your browser. No data is sent to any server.</p>
+          <p class="mt-3 text-[10px] text-tertiary text-center sm:text-left">100% static. Runs entirely in your browser. No data is sent to any server.</p>
         </div>
       </footer>
     </div>
@@ -1412,7 +1412,7 @@ Constraints:
         scoreRingFill.style.strokeDashoffset = circumference - (result.score / 100) * circumference;
         scoreRingFill.style.stroke = getScoreColor(result.score);
         scoreValue.textContent = result.score;
-        scoreLabel.textContent = `${getScoreCategory(result.score)} — ${result.feedback}`;
+        scoreLabel.textContent = `${getScoreCategory(result.score)} - ${result.feedback}`;
         scoreWords.textContent = result.wordCount;
 
         criteriaList.innerHTML = result.criteria.map(c =>

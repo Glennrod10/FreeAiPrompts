@@ -6,12 +6,12 @@ const categories = Object.entries(byCategory);
 const total = PROMPTS.length;
 const catCount = categories.length;
 ---
-<BaseLayout title="Ready-to-Use Prompts — Free Prompt Studio" description={`Browse ${total} ready-to-copy AI prompts across ${catCount} categories.`} wide>
+<BaseLayout title="Ready-to-Use Prompts - Free Prompt Studio" description={`Browse ${total} ready-to-copy AI prompts across ${catCount} categories.`} wide>
   <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
     <div>
       <p class="text-xs font-semibold uppercase tracking-widest text-accent">Prompt Library</p>
       <h1 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight text-primary">Ready-to-Use Prompts</h1>
-      <p class="mt-1.5 text-sm text-secondary"><span class="font-medium text-primary">{total}</span> prompts across <span class="font-medium text-primary">{catCount}</span> categories — click any card to reveal the full prompt, then copy it.</p>
+      <p class="mt-1.5 text-sm text-secondary"><span class="font-medium text-primary">{total}</span> prompts across <span class="font-medium text-primary">{catCount}</span> categories. Click any card to reveal the full prompt, then copy it.</p>
     </div>
     <div class="relative w-full sm:w-64 shrink-0">
       <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
