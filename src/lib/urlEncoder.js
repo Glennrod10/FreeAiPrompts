@@ -12,7 +12,7 @@ export function decodeState(hash) {
   try {
     const decoded = decodeURIComponent(atob(hash));
     const data = JSON.parse(decoded);
-    if (data && typeof data === 'object' && data.variables && data.mode) {
+    if (data && typeof data === 'object' && data.tool && data.framework) {
       return data;
     }
     return null;
