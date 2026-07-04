@@ -142,20 +142,20 @@ import '../styles/global.css';
                 <div class="card-header">Prompt Framework</div>
                 <div class="card-content">
                   <select class="input-default w-full" id="framework-selector">
-                    <option value="CO-STAR">CO-STAR — Context, Obj., Style, Tone, Audience, Response</option>
-                    <option value="RISEN">RISEN — Role, Instructions, Steps, End Goal, Narrowing</option>
-                    <option value="CRAFT">CRAFT — Context, Role, Action, Format, Target</option>
-                    <option value="ORACLE">ORACLE — Outcome, Request, Action, Context, Example</option>
-                    <option value="RACE">RACE — Role, Action, Context, Example</option>
-                    <option value="CARE">CARE — Context, Action, Result, Example</option>
-                    <option value="APE">APE — Action, Purpose, Expectation</option>
-                    <option value="CREATE">CREATE — Context, Role, Examples, Action, Task, Expect.</option>
-                    <option value="TAG">TAG — Task, Action, Goal</option>
-                    <option value="CREO">CREO — Context, Role, Examples, Output</option>
-                    <option value="RISE">RISE — Role, Input, Steps, Expectation</option>
-                    <option value="PAIN">PAIN — Problem, Audience, Implications, Need</option>
-                    <option value="COAST">COAST — Context, Obj., Actions, Scenario, Task</option>
-                    <option value="Freeform">Freeform — No specific structure</option>
+                    <option value="CO-STAR">CO-STAR: Context, Obj., Style, Tone, Audience, Response</option>
+                    <option value="RISEN">RISEN: Role, Instructions, Steps, End Goal, Narrowing</option>
+                    <option value="CRAFT">CRAFT: Context, Role, Action, Format, Target</option>
+                    <option value="ORACLE">ORACLE: Outcome, Request, Action, Context, Example</option>
+                    <option value="RACE">RACE: Role, Action, Context, Example</option>
+                    <option value="CARE">CARE: Context, Action, Result, Example</option>
+                    <option value="APE">APE: Action, Purpose, Expectation</option>
+                    <option value="CREATE">CREATE: Context, Role, Examples, Action, Task, Expect.</option>
+                    <option value="TAG">TAG: Task, Action, Goal</option>
+                    <option value="CREO">CREO: Context, Role, Examples, Output</option>
+                    <option value="RISE">RISE: Role, Input, Steps, Expectation</option>
+                    <option value="PAIN">PAIN: Problem, Audience, Implications, Need</option>
+                    <option value="COAST">COAST: Context, Obj., Actions, Scenario, Task</option>
+                    <option value="Freeform">Freeform: No specific structure</option>
                   </select>
                   <p class="mt-2 text-xs text-tertiary" id="framework-desc">Context, Objective, Style, Tone, Audience, Response</p>
                 </div>
@@ -675,7 +675,7 @@ Constraints:
 - Do not use jargon without explanation
 - Keep paragraphs short for readability
 - Each section must include at least one specific example or data point
-- Avoid promotional language — focus on providing value
+- Avoid promotional language: focus on providing value
 - Format with bullet points or numbered lists where appropriate`;
             break;
           }
@@ -686,7 +686,7 @@ Constraints:
 
 Context: You are writing to ${v.recipient} with a ${tone} tone. The email should clearly convey its purpose and drive the desired action.
 
-Subject: [${v.purpose || 'Update'}] — [Generate compelling subject line]
+Subject: [${v.purpose || 'Update'}]: [Generate compelling subject line]
 
 Dear ${v.recipient},
 
@@ -694,7 +694,7 @@ I hope this message finds you well. I'm writing to discuss ${v.purpose || 'the f
 
 Tone: ${tone}
 Constraints:
-- Keep the message concise and focused — do not exceed 3-4 paragraphs
+- Keep the message concise and focused: do not exceed 3-4 paragraphs
 - Include specific next steps or action items
 - Maintain a ${tone} tone throughout
 - Avoid unnecessary jargon or overly complex language
@@ -715,18 +715,18 @@ Best regards,
 Context: The copy targets ${v.audience || 'ideal customers'} with the core benefit of ${v.benefit || 'solving a key problem'}. The goal is to drive conversions through the ${v.cta || 'primary call to action'}.
 
 Copy Structure (AIDA Framework):
-1. ATTENTION — Open with a powerful hook that grabs attention
-2. INTEREST — Build interest by highlighting the core benefit: ${v.benefit || 'the main advantage'}
-3. DESIRE — Create desire through benefits, social proof, and emotional triggers
-4. ACTION — Drive action with a clear, compelling CTA: ${v.cta || 'the next step'}
+1. ATTENTION: Open with a powerful hook that grabs attention
+2. INTEREST: Build interest by highlighting the core benefit: ${v.benefit || 'the main advantage'}
+3. DESIRE: Create desire through benefits, social proof, and emotional triggers
+4. ACTION: Drive action with a clear, compelling CTA: ${v.cta || 'the next step'}
 
 Constraints:
 - Speak directly to ${v.audience || 'the target audience'} using "you" and "your"
-- Focus on benefits, not just features — explain why each feature matters
+- Focus on benefits, not just features: explain why each feature matters
 - Use persuasive language and power words
-- Keep paragraphs short and scannable — no more than 3 sentences each
+- Keep paragraphs short and scannable: no more than 3 sentences each
 - End with urgency or a reason to act now
-- Do not use vague claims — support each assertion with a specific benefit
+- Do not use vague claims: support each assertion with a specific benefit
 - Tone: Persuasive, benefit-focused, action-oriented. Avoid being overly salesy`;
             break;
           }
@@ -743,7 +743,7 @@ ${v.sections ? `- Sections to include:\n${v.sections}\n` : '- 2-3 main content s
 
 Constraints:
 - Use a conversational, friendly tone throughout
-- Keep paragraphs short for email reading — max 3 sentences each
+- Keep paragraphs short for email reading: max 3 sentences each
 - Use bullet points for key information
 - Do not exceed 5-7 total sections including opening and closing
 - Include a personal touch or anecdote to connect with readers
@@ -756,20 +756,20 @@ Constraints:
 
 Context: The codebase is written in ${v.language || 'the specified language/stack'}. The review must focus on ${v.focus || 'general code quality and best practices'}. ${v.constraints ? `Additional constraints: ${v.constraints}` : ''}
 
-Review Checklist — evaluate each area and provide specific feedback:
-- Code correctness and logic errors — identify any bugs or edge cases
-- Performance considerations — flag inefficient algorithms or resource usage
-- Security vulnerabilities — check for injection risks, data exposure, or auth flaws
-- Code style and conventions — verify consistency with project standards
-- Error handling and edge cases — ensure all failure modes are handled
-- Documentation and comments — assess clarity and completeness
-- Test coverage suggestions — recommend specific test cases to add
+Review Checklist: evaluate each area and provide specific feedback:
+- Code correctness and logic errors: identify any bugs or edge cases
+- Performance considerations: flag inefficient algorithms or resource usage
+- Security vulnerabilities: check for injection risks, data exposure, or auth flaws
+- Code style and conventions: verify consistency with project standards
+- Error handling and edge cases: ensure all failure modes are handled
+- Documentation and comments: assess clarity and completeness
+- Test coverage suggestions: recommend specific test cases to add
 
 Constraints:
-- Provide specific, actionable feedback for each issue found — not just what is wrong but how to fix it
+- Provide specific, actionable feedback for each issue found: not just what is wrong but how to fix it
 - Include code examples showing the recommended fix
 - Prioritize issues by severity: critical, major, minor
-- Do not make assumptions — ask clarifying questions when needed
+- Do not make assumptions: ask clarifying questions when needed
 - Tone: Constructive, professional, and collaborative. Focus on improving the code, not criticizing the author
 
 Format: Produce a structured review with severity labels and suggested fixes for each issue.`;
@@ -782,16 +782,16 @@ Format: Produce a structured review with severity labels and suggested fixes for
 Context: The bug occurs in ${v.language || 'the specified language/framework'}. The symptom is: ${v.symptom}. ${v.tried ? 'The following approaches have already been attempted: ' + v.tried : 'No debugging attempts have been made yet.'}
 
 ${v.code ? `Relevant Code:\n\`\`\`\n${v.code}\n\`\`\`\n` : ''}
-Your task — help resolve this issue by providing:
-1. Root cause analysis — identify what is causing the bug and why
-2. Fix recommendation — provide corrected code or configuration changes
-3. Prevention strategy — suggest testing patterns or code changes to avoid similar issues
+Your task: help resolve this issue by providing:
+1. Root cause analysis: identify what is causing the bug and why
+2. Fix recommendation: provide corrected code or configuration changes
+3. Prevention strategy: suggest testing patterns or code changes to avoid similar issues
 
 Constraints:
 - Explain the root cause in clear terms before providing the fix
-- Provide complete, working code examples — not pseudocode
+- Provide complete, working code examples: not pseudocode
 - Consider edge cases and error states
-- Do not suggest overly complex solutions — prefer minimal, targeted fixes
+- Do not suggest overly complex solutions: prefer minimal, targeted fixes
 - If multiple possible causes exist, list them in order of likelihood
 - Tone: Analytical, methodical, and educational. Explain your reasoning step by step.
 
@@ -805,7 +805,7 @@ Output Format: Provide a root cause analysis, a specific fix recommendation with
 Context: The API uses the ${v.pattern || 'REST'} pattern on ${v.tech || 'the specified tech stack'}. Key resources to model include: ${v.resources || 'the core domain entities'}.
 
 Design Requirements:
-- Follow ${v.pattern || 'RESTful'} conventions and best practices — use proper HTTP methods and status codes
+- Follow ${v.pattern || 'RESTful'} conventions and best practices: use proper HTTP methods and status codes
 - Define clear endpoint naming and versioning strategy (e.g., /api/v1/resources)
 - Include request/response schemas for each endpoint with required and optional fields
 - Plan authentication and authorization model (JWT, OAuth, API keys)
@@ -820,7 +820,7 @@ Output Format: For each endpoint, provide:
 - Example request and response bodies
 
 Constraints:
-- Follow the ${v.pattern || 'REST'} pattern consistently — do not mix patterns
+- Follow the ${v.pattern || 'REST'} pattern consistently: do not mix patterns
 - Ensure all endpoints follow RESTful naming conventions (nouns, not verbs)
 - Include at least one example of error handling
 - Consider idempotency for PUT and DELETE operations
@@ -837,11 +837,11 @@ Context: ${v.constraints ? 'Constraints: ' + v.constraints : 'The system must ba
 Architecture Requirements:
 - High-level system diagram description showing all major components and their interactions
 - Component breakdown with clear responsibilities and boundaries
-- Data flow between services — synchronous vs asynchronous communication
-- Storage and caching strategy — database choices, cache layers, data partitioning
-- Scalability and performance considerations — horizontal vs vertical scaling
-- Security architecture — authentication, authorization, encryption, network segmentation
-- Monitoring and observability — logging, metrics, alerting, tracing
+- Data flow between services: synchronous vs asynchronous communication
+- Storage and caching strategy: database choices, cache layers, data partitioning
+- Scalability and performance considerations: horizontal vs vertical scaling
+- Security architecture: authentication, authorization, encryption, network segmentation
+- Monitoring and observability: logging, metrics, alerting, tracing
 - Trade-offs and alternatives considered with rationale for chosen approach
 
 Output Format: Provide a structured architecture document with:
@@ -853,7 +853,7 @@ Output Format: Provide a structured architecture document with:
 
 Constraints:
 - Address each key concern explicitly with a specific design decision
-- Do not introduce unnecessary complexity — prefer simple solutions where adequate
+- Do not introduce unnecessary complexity: prefer simple solutions where adequate
 - Consider failure modes and include resilience patterns
 - Tone: Analytical, systematic, and decision-oriented. Explain why each choice was made.`;
             break;
@@ -878,8 +878,8 @@ ${v.platform ? `Platform-Specific Constraints for ${v.platform}:
 - Optimize for ${v.platform} audience behavior and consumption patterns` : ''}
 
 General Constraints:
-- Open with a hook in the first line — do not bury the lede
-- Focus on one primary benefit per ad — do not overwhelm with features
+- Open with a hook in the first line: do not bury the lede
+- Focus on one primary benefit per ad: do not overwhelm with features
 - Use active voice and power words throughout
 - End with urgency or a time-limited reason to act
 - Tone: Persuasive, benefit-focused, action-oriented. Match the brand voice.
@@ -891,7 +891,7 @@ Output Format: Structured ad copy with an attention-grabbing headline, benefit-d
             if (!v.keyword) break;
             output = `You are an SEO content strategist. Create an optimized content brief for the keyword: "${v.keyword}"
 
-Context: The search intent is ${v.intent || 'informational'} — users searching for "${v.keyword}" want ${v.intent === 'Transactional' ? 'to make a purchase decision' : v.intent === 'Navigational' ? 'to find a specific page' : v.intent === 'Commercial' ? 'to compare options' : 'to learn more about the topic'}.
+Context: The search intent is ${v.intent || 'informational'}: users searching for "${v.keyword}" want ${v.intent === 'Transactional' ? 'to make a purchase decision' : v.intent === 'Navigational' ? 'to find a specific page' : v.intent === 'Commercial' ? 'to compare options' : 'to learn more about the topic'}.
 
 ${v.competitors ? `Competitor Analysis to differentiate from:\n${v.competitors}\n` : ''}${v.angle ? `Unique Angle: ${v.angle}\n` : ''}
 
@@ -912,7 +912,7 @@ On-Page Optimization Requirements:
 
 Constraints:
 - Use the target keyword in H1, first paragraph, and naturally in 2-3 subheadings
-- Do not keyword stuff — use semantic variations and LSI terms
+- Do not keyword stuff: use semantic variations and LSI terms
 - Include at least one data point or statistic to support claims
 - Keep paragraphs under 4 sentences for readability
 - Tone: Authoritative, helpful, and accessible. Match the brand voice while maintaining SEO best practices.`;
@@ -954,7 +954,7 @@ Landing Page Structure:
    - Strong, action-oriented CTA button with benefit-driven text
 
 Constraints:
-- Keep the hero section above the fold — no scrolling required to see headline and CTA
+- Keep the hero section above the fold: no scrolling required to see headline and CTA
 - Use short paragraphs (1-3 sentences) and plenty of whitespace
 - Each section must support the single conversion goal
 - Include at least one trust signal (testimonial, statistic, certification badge)
@@ -974,7 +974,7 @@ Context: The goal is to generate a high-quality image of: ${v.subject}${s}${m}${
 Constraints:
 - The image must be photorealistic with cinematic quality
 - Use descriptive language that guides the AI toward the desired artistic style
-- Avoid abstract or ambiguous terms — be specific about visual elements
+- Avoid abstract or ambiguous terms: be specific about visual elements
 - The prompt should produce a cohesive composition with clear foreground, subject, and background
 
 Format: Use comma-separated descriptive phrases followed by technical parameters.
@@ -994,7 +994,7 @@ Context: The image should depict ${v.scene}${s}${c}${m}. The goal is to produce 
 
 Constraints:
 - Use specific visual details rather than vague descriptors
-- Guide the composition — specify what appears in foreground, midground, and background
+- Guide the composition: specify what appears in foreground, midground, and background
 - Include lighting direction and quality (e.g., soft diffused light, dramatic backlighting)
 - Avoid text or readable characters in the generated image
 
@@ -1010,7 +1010,7 @@ Create an image of ${v.scene}${s}${c}${m}. High quality, detailed, 4k resolution
 
 Context: This analysis is set in the context of ${v.market || 'the current market conditions'} with a focus on ${v.focus || 'overall business assessment'}. The analysis will inform strategic decision-making.
 
-Analysis Framework — evaluate each quadrant thoroughly:
+Analysis Framework: evaluate each quadrant thoroughly:
 
 ## Strengths (Internal Positive Factors)
 - What does ${v.business} do exceptionally well?
@@ -1040,7 +1040,7 @@ Constraints:
 - Provide at least 4 specific, actionable points per quadrant
 - Prioritize items within each quadrant by impact and urgency
 - Include strategic implications and recommended actions for each finding
-- Do not list generic observations — each point must be specific to ${v.business}
+- Do not list generic observations: each point must be specific to ${v.business}
 - Tone: Analytical, objective, and strategic. Use business analysis terminology.`;
             break;
           }
@@ -1104,7 +1104,7 @@ Paper Structure:
    - Brief summary of research question, methods, key findings, and conclusions (150-250 words)
 
 3. INTRODUCTION
-   - Background and context for ${v.topic} — why this research matters
+   - Background and context for ${v.topic}: why this research matters
    - Research problem and its significance
    - Specific research questions or hypotheses
    - Thesis statement: ${v.thesis || 'State your thesis'}
@@ -1112,7 +1112,7 @@ Paper Structure:
 
 4. LITERATURE REVIEW
    - Key theories and frameworks relevant to ${v.topic}
-   - Current state of research — what is known and what gaps remain
+   - Current state of research: what is known and what gaps remain
    - How this paper addresses identified gaps
    - Critical evaluation of prior work
 
@@ -1138,7 +1138,7 @@ Paper Structure:
 
 Constraints:
 - Each section must have a clear purpose and connection to the thesis
-- Use formal academic language throughout — do not use contractions or colloquialisms
+- Use formal academic language throughout: do not use contractions or colloquialisms
 - Include citations in appropriate academic format (APA, MLA, Chicago)
 - Ensure logical flow between sections with clear transitions
 - Tone: Academic, objective, and authoritative. Maintain third-person perspective.`;
@@ -1179,7 +1179,7 @@ ${v.questions ? v.questions.split('\n').filter(Boolean).map(q => `   - ${q}`).jo
 Constraints:
 - Begin with data quality assessment before any analysis
 - Use appropriate statistical significance levels (p < 0.05)
-- Do not overstate conclusions — clearly separate findings from interpretations
+- Do not overstate conclusions: clearly separate findings from interpretations
 - Include visualization recommendations for each key finding
 - Document all assumptions and methodological choices
 - Tone: Analytical, precise, and data-driven. Use statistical terminology correctly.`;
@@ -1231,8 +1231,8 @@ Assessment:
 Constraints:
 - Each learning objective must be addressed by at least one activity
 - Include differentiation strategies for at least two ability levels
-- Allocate time realistically — account for transitions between activities
-- Use active learning techniques — minimize lecture time
+- Allocate time realistically: account for transitions between activities
+- Use active learning techniques: minimize lecture time
 - Tone: Instructional, clear, and engaging. Write for the educator delivering the lesson.`;
             break;
           }
@@ -1251,7 +1251,7 @@ Study Guide Content:
 
 2. KEY THEORIES AND FRAMEWORKS
    - Main theories with their originators and core propositions
-   - Critical evaluation of each theory — strengths and limitations
+   - Critical evaluation of each theory: strengths and limitations
    - Real-world applications demonstrating each concept
 
 3. PRACTICAL APPLICATIONS
@@ -1267,12 +1267,12 @@ Study Guide Content:
 
 5. REVIEW AND SELF-ASSESSMENT
    - Chapter summaries highlighting the 3 most important takeaways each
-   - Review questions testing understanding — not just recall
+   - Review questions testing understanding: not just recall
    - Practice test with answer key and explanations
 
 Constraints:
 - Each concept must include a definition, example, and connection to the broader subject
-- Avoid unnecessary details — focus on what is most testable or applicable
+- Avoid unnecessary details: focus on what is most testable or applicable
 - Include memory aids for at least 5 key terms or concepts
 - Provide practice questions at varying difficulty levels
 - Tone: Clear, encouraging, and pedagogically effective. Write as if tutoring a student one-on-one.`;
@@ -1291,22 +1291,22 @@ Thread Structure:
 2/The most common misconception about ${v.topic}:
 [State what most people get wrong]
 
-3/[First key insight — include a specific data point, example, or framework]
+3/[First key insight: include a specific data point, example, or framework]
 
-4/[Second key insight — build on the first with a practical takeaway]
+4/[Second key insight: build on the first with a practical takeaway]
 
-5/[Third insight — offer a counterintuitive perspective or pro tip]
+5/[Third insight: offer a counterintuitive perspective or pro tip]
 
 6/[Real example, case study, or personal experience that illustrates the point]
 
-7/[Actionable advice — something readers can apply immediately]
+7/[Actionable advice: something readers can apply immediately]
 
 8/Summary: [Single sentence capturing the main takeaway]
 
 ${v.cta ? '\n' + v.cta : '\nWhat is your experience with this? Share your thoughts below 👇'}
 
 Constraints:
-- Each tweet must not exceed 280 characters — count carefully
+- Each tweet must not exceed 280 characters: count carefully
 - Open with a bold, curiosity-gap hook in tweet 1
 - Number each tweet (1/8, 2/8, etc.) for clear progression
 - Use line breaks within tweets for readability
@@ -1326,25 +1326,25 @@ Personal Angle: ${v.angle || 'Share your personal experience, insight, or lesson
 
 Post Structure:
 
-HEADLINE: [First 1-3 lines that grab attention — make it bold, specific, and relatable]
+HEADLINE: [First 1-3 lines that grab attention: make it bold, specific, and relatable]
 
 [Open with a personal story, observation, or surprising fact relating to ${v.topic}]
 
-[Share the key insight or lesson learned — be specific about what changed your thinking]
+[Share the key insight or lesson learned: be specific about what changed your thinking]
 
 [Provide actionable advice or a framework readers can apply today]
 
-Call to action: ${v.cta || 'Share your thoughts in the comments below — I would love to hear your perspective'}
+Call to action: ${v.cta || 'Share your thoughts in the comments below: I would love to hear your perspective'}
 
 [3-5 relevant hashtags]
 
 Constraints:
 - Write in first person for authenticity and connection
-- Keep paragraphs short — maximum 3 sentences each
+- Keep paragraphs short: maximum 3 sentences each
 - Include line breaks between sections for mobile readability
-- Lead with the most compelling idea — do not bury the lede
-- Be specific — include numbers, timelines, or concrete examples
-- Avoid corporate jargon and buzzwords — sound like a human, not a brand
+- Lead with the most compelling idea: do not bury the lede
+- Be specific: include numbers, timelines, or concrete examples
+- Avoid corporate jargon and buzzwords: sound like a human, not a brand
 - Tag 1-2 relevant people or companies if applicable
 - Tone: Professional but conversational. Authoritative but approachable. Write to start a conversation, not make a speech.`;
             break;
