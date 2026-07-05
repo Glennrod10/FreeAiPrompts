@@ -4,6 +4,8 @@ import '../styles/global.css';
 
 <html lang="en" class="">
   <head>
+    <script is:inline>(()=>{try{var t=localStorage.getItem('theme');document.documentElement.classList.add(t==='light'?'light':'dark')}catch(e){document.documentElement.classList.add('dark')}})()</script>
+    <style is:inline>html{background:oklch(0.13 0.015 260)}html.light{background:oklch(0.97 0.008 80)}</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Free Prompt Studio - AI Prompt Generator, Templates & Analyzer</title>
@@ -28,7 +30,17 @@ import '../styles/global.css';
             <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
           </button>
           <nav class="hidden lg:flex items-center gap-1">
-            <button class="nav-link active" data-nav="generator">Generator</button>
+            <div class="nav-dd">
+              <button class="nav-link active" data-nav="generator">
+                Generator
+                <svg class="nav-dd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="nav-dd-menu">
+                <button class="nav-dd-item" data-genmode="text">Text Prompt Generator</button>
+                <button class="nav-dd-item" data-genmode="image">Image Prompt Generator</button>
+                <button class="nav-dd-item" data-genmode="video">Video Prompt Generator</button>
+              </div>
+            </div>
             <button class="nav-link" data-nav="templates">Templates</button>
             <button class="nav-link" data-nav="analyzer">Analyzer</button>
             <a href="/prompts" class="nav-link">Prompts</a>
@@ -75,7 +87,17 @@ import '../styles/global.css';
           </button>
         </div>
         <nav class="flex flex-col p-3 gap-1">
-          <button class="nav-link active" data-nav="generator">Generator</button>
+          <div>
+            <button class="nav-link active w-full flex items-center justify-between" id="mob-gen-toggle" aria-expanded="false">
+              Generator
+              <svg class="nav-dd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mob-submenu" id="mob-gen-submenu">
+              <button class="mob-sub-item" data-genmode="text">Text Prompt Generator</button>
+              <button class="mob-sub-item" data-genmode="image">Image Prompt Generator</button>
+              <button class="mob-sub-item" data-genmode="video">Video Prompt Generator</button>
+            </div>
+          </div>
           <button class="nav-link" data-nav="templates">Templates</button>
           <button class="nav-link" data-nav="analyzer">Analyzer</button>
           <a href="/prompts" class="nav-link">Prompts</a>
@@ -119,15 +141,8 @@ import '../styles/global.css';
             <div class="card">
               <div class="card-header">What do you need a prompt for?</div>
               <div class="card-content space-y-3">
-                <textarea class="input-mono min-h-[80px] sm:min-h-[90px]" id="quick-input" placeholder="e.g. Write a blog post about remote work productivity tips...">I want a prompt to </textarea>
-                <div class="flex flex-wrap gap-1.5" id="suggestion-chips">
-                  <button class="btn-ghost chip" data-text="Write a blog post about">📝 Blog post</button>
-                  <button class="btn-ghost chip" data-text="Draft a professional email about">📧 Email</button>
-                  <button class="btn-ghost chip" data-text="Create social media content for">📱 Social media</button>
-                  <button class="btn-ghost chip" data-text="Write persuasive sales copy for">💰 Sales copy</button>
-                  <button class="btn-ghost chip" data-text="Explain in simple terms">🧠 Explain</button>
-                  <button class="btn-ghost chip" data-text="Brainstorm creative ideas for">💡 Brainstorm</button>
-                </div>
+                <textarea class="input-mono min-h-[80px] sm:min-h-[90px]" id="quick-input" placeholder="e.g. Write a blog post about remote work productivity tips..."></textarea>
+                <div class="flex flex-wrap gap-1.5" id="suggestion-chips"></div>
               </div>
             </div>
           </div>
@@ -139,20 +154,20 @@ import '../styles/global.css';
                 <div class="card-header">Prompt Framework</div>
                 <div class="card-content">
                   <select class="input-default w-full" id="framework-selector">
-                    <option value="CO-STAR">CO-STAR: Context, Obj., Style, Tone, Audience, Response</option>
-                    <option value="RISEN">RISEN: Role, Instructions, Steps, End Goal, Narrowing</option>
-                    <option value="CRAFT">CRAFT: Context, Role, Action, Format, Target</option>
-                    <option value="ORACLE">ORACLE: Outcome, Request, Action, Context, Example</option>
-                    <option value="RACE">RACE: Role, Action, Context, Example</option>
-                    <option value="CARE">CARE: Context, Action, Result, Example</option>
-                    <option value="APE">APE: Action, Purpose, Expectation</option>
-                    <option value="CREATE">CREATE: Context, Role, Examples, Action, Task, Expect.</option>
-                    <option value="TAG">TAG: Task, Action, Goal</option>
-                    <option value="CREO">CREO: Context, Role, Examples, Output</option>
-                    <option value="RISE">RISE: Role, Input, Steps, Expectation</option>
-                    <option value="PAIN">PAIN: Problem, Audience, Implications, Need</option>
-                    <option value="COAST">COAST: Context, Obj., Actions, Scenario, Task</option>
-                    <option value="Freeform">Freeform: No specific structure</option>
+                    <option value="CO-STAR">CO-STAR</option>
+                    <option value="RISEN">RISEN</option>
+                    <option value="CRAFT">CRAFT</option>
+                    <option value="ORACLE">ORACLE</option>
+                    <option value="RACE">RACE</option>
+                    <option value="CARE">CARE</option>
+                    <option value="APE">APE</option>
+                    <option value="CREATE">CREATE</option>
+                    <option value="TAG">TAG</option>
+                    <option value="CREO">CREO</option>
+                    <option value="RISE">RISE</option>
+                    <option value="PAIN">PAIN</option>
+                    <option value="COAST">COAST</option>
+                    <option value="Freeform">Freeform</option>
                   </select>
                   <p class="mt-2 text-xs text-tertiary" id="framework-desc">Context, Objective, Style, Tone, Audience, Response</p>
                 </div>
@@ -543,17 +558,133 @@ import '../styles/global.css';
         });
       }
 
-      // ── Suggestion chips ──
-      document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-          const text = chip.dataset.text;
-          if (quickInput) {
-            quickInput.value = `I want a prompt to ${text} `;
-            quickInput.dispatchEvent(new Event('input'));
-            quickInput.focus();
-          }
+      // ── Generator mode switching (nav dropdown) ──
+      let genCategory = 'text';
+      const suggestionChips = document.getElementById('suggestion-chips');
+
+      const GEN_MODES = {
+        text: {
+          placeholder: 'e.g. Write a blog post about remote work productivity tips...',
+          usePrefix: true,
+          models: ['chatgpt', 'claude', 'gemini', 'grok', 'perplexity'],
+          chips: [
+            { text: 'Write a blog post about', label: 'Blog post', icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>' },
+            { text: 'Draft a professional email about', label: 'Email', icon: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>' },
+            { text: 'Create social media content for', label: 'Social media', icon: '<path d="M4 9a5 5 0 1 1 10 0A5 5 0 0 1 4 9Z"/><path d="M12 21a9 9 0 1 1 9-9 3 3 0 0 1-6 0 6 6 0 1 0-6 6 3 3 0 0 0 3 3Z"/>' },
+            { text: 'Write persuasive sales copy for', label: 'Sales copy', icon: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>' },
+            { text: 'Explain in simple terms', label: 'Explain', icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>' },
+            { text: 'Brainstorm creative ideas for', label: 'Brainstorm', icon: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>' },
+          ],
+        },
+        image: {
+          placeholder: 'e.g. A photorealistic mountain landscape at sunset',
+          usePrefix: false,
+          models: ['midjourney'],
+          chips: [
+            { text: 'Generate a photorealistic image of', label: 'Photorealistic', icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>' },
+            { text: 'Create a logo for', label: 'Logo', icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>' },
+            { text: 'Illustrate a concept of', label: 'Illustration', icon: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>' },
+            { text: 'Design a product mockup for', label: 'Mockup', icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>' },
+            { text: 'Create a character design for', label: 'Character', icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
+            { text: 'Generate an architectural render of', label: 'Architecture', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+          ],
+        },
+        video: {
+          placeholder: 'e.g. A 2-minute product explainer video script',
+          usePrefix: false,
+          models: ['chatgpt', 'claude', 'gemini'],
+          chips: [
+            { text: 'Write a video script for', label: 'Script', icon: '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/>' },
+            { text: 'Create a YouTube description for', label: 'YouTube', icon: '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>' },
+            { text: 'Plan a storyboard for', label: 'Storyboard', icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>' },
+            { text: 'Write a voiceover script for', label: 'Voiceover', icon: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>' },
+          ],
+        },
+      };
+
+      function renderChips(modeId) {
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        suggestionChips.innerHTML = mode.chips.map(ch =>
+          `<button class="btn-ghost chip inline-flex items-center gap-1.5" data-text="${ch.text}"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ch.icon}</svg> ${ch.label}</button>`
+        ).join('');
+        suggestionChips.querySelectorAll('.chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const text = chip.dataset.text;
+            const mode = GEN_MODES[genCategory];
+            if (quickInput) {
+              quickInput.value = (mode && mode.usePrefix) ? `I want a prompt to ${text} ` : `${text} `;
+              quickInput.dispatchEvent(new Event('input'));
+              quickInput.focus();
+            }
+          });
+        });
+      }
+
+      function renderModels(modeId) {
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        const filtered = MODELS.filter(m => mode.models.includes(m.id));
+        if (!mode.models.includes(selectedModel) && filtered.length > 0) {
+          selectedModel = filtered[0].id;
+        }
+        modelSelector.innerHTML = filtered.map(m =>
+          `<button class="btn-ghost ${m.id === selectedModel ? 'active' : ''}" data-model="${m.id}">${m.label}</button>`
+        ).join('');
+        modelSelector.querySelectorAll('.btn-ghost').forEach(btn => btn.addEventListener('click', () => {
+          modelSelector.querySelectorAll('.btn-ghost').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedModel = btn.dataset.model;
+          const m = MODELS.find(x => x.id === selectedModel);
+          if (m) modelDesc.textContent = m.desc;
+          compileGenerator();
+        }));
+        const m = MODELS.find(x => x.id === selectedModel);
+        if (m) modelDesc.textContent = m.desc;
+      }
+
+      function switchGeneratorMode(modeId) {
+        genCategory = modeId;
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        if (quickInput) quickInput.placeholder = mode.placeholder;
+        renderChips(modeId);
+        renderModels(modeId);
+        // Update nav dropdown active state
+        document.querySelectorAll('.nav-dd-item').forEach(el => el.classList.toggle('active', el.dataset.genmode === modeId));
+        compileGenerator();
+      }
+
+      // Desktop dropdown click
+      document.querySelectorAll('.nav-dd-item').forEach(item => {
+        item.addEventListener('click', () => {
+          switchMethod('generator');
+          switchGeneratorMode(item.dataset.genmode);
         });
       });
+
+      // Mobile submenu toggle
+      const mobGenToggle = document.getElementById('mob-gen-toggle');
+      const mobGenSubmenu = document.getElementById('mob-gen-submenu');
+      if (mobGenToggle && mobGenSubmenu) {
+        mobGenToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = mobGenSubmenu.classList.toggle('open');
+          mobGenToggle.setAttribute('aria-expanded', open);
+        });
+      }
+
+      // Mobile submenu item click
+      document.querySelectorAll('.mob-sub-item').forEach(item => {
+        item.addEventListener('click', () => {
+          closeMenu();
+          switchMethod('generator');
+          switchGeneratorMode(item.dataset.genmode);
+        });
+      });
+
+      // Initialize text mode
+      switchGeneratorMode('text');
 
       // ── Sanitizer toggle ──
       const toggleSanitizer = document.getElementById('toggle-sanitizer');

@@ -10,6 +10,8 @@ const path = Astro.url.pathname;
 ---
 <html lang="en">
   <head>
+    <script is:inline>(()=>{try{var t=localStorage.getItem('theme');document.documentElement.classList.add(t==='light'?'light':'dark')}catch(e){document.documentElement.classList.add('dark')}})()</script>
+    <style is:inline>html{background:oklch(0.13 0.015 260)}html.light{background:oklch(0.97 0.008 80)}</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
@@ -33,7 +35,17 @@ const path = Astro.url.pathname;
             <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
           </a>
           <nav class="hidden lg:flex items-center gap-1">
-            <a href="/" class:list={['nav-link', path === '/' && 'active']}>Generator</a>
+            <div class="nav-dd">
+              <a href="/" class:list={['nav-link', path === '/' && 'active']}>
+                Generator
+                <svg class="nav-dd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </a>
+              <div class="nav-dd-menu">
+                <a href="/" class="nav-dd-item">Text Prompt Generator</a>
+                <a href="/" class="nav-dd-item">Image Prompt Generator</a>
+                <a href="/" class="nav-dd-item">Video Prompt Generator</a>
+              </div>
+            </div>
             <a href="/" class="nav-link">Templates</a>
             <a href="/" class="nav-link">Analyzer</a>
             <a href="/prompts" class:list={['nav-link', path.startsWith('/prompts') && 'active']}>Prompts</a>
@@ -68,7 +80,9 @@ const path = Astro.url.pathname;
           </button>
         </div>
         <nav class="flex flex-col p-3 gap-1">
-          <a href="/" class:list={['nav-link', path === '/' && 'active']}>Generator</a>
+          <div>
+            <a href="/" class:list={['nav-link', path === '/' && 'active']}>Generator</a>
+          </div>
           <a href="/" class="nav-link">Templates</a>
           <a href="/" class="nav-link">Analyzer</a>
           <a href="/prompts" class:list={['nav-link', path.startsWith('/prompts') && 'active']}>Prompts</a>
