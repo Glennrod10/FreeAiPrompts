@@ -4,44 +4,59 @@ import '../styles/global.css';
 
 <html lang="en" class="">
   <head>
+    <script is:inline>(()=>{try{var t=localStorage.getItem('theme');document.documentElement.classList.add(t==='light'?'light':'dark')}catch(e){document.documentElement.classList.add('dark')}})()</script>
+    <style is:inline>html{background:oklch(0.13 0.015 260)}html.light{background:oklch(0.97 0.008 80)}</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Free Prompt Studio — AI Prompt Generator, Templates & Analyzer</title>
+    <title>Free Prompt Studio - AI Prompt Generator, Templates & Analyzer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content="Generate optimized AI prompts, browse template libraries, and analyze your prompts for quality — all in your browser." />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="PromptGen" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="description" content="Free AI Prompt Generator - describe what you need and get a structured, ready-to-use prompt for ChatGPT, Claude, Gemini, and more. Templates, analyzer, and sanitizer included." />
   </head>
   <body>
     <!-- ═══════ HEADER (full width) ═══════ -->
     <header class="border-b border-default">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <div class="flex items-center gap-4 sm:gap-6">
-          <button class="flex items-center gap-2.5 shrink-0 cursor-pointer bg-transparent border-none text-left" id="logo-btn">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5" fill="none" class="text-tertiary" />
-              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-primary" />
-            </svg>
-            <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
-          </button>
-          <nav class="hidden sm:flex items-center gap-1">
-            <button class="nav-link active" data-nav="generator">Generator</button>
+            <button class="flex items-center gap-2.5 shrink-0 cursor-pointer bg-transparent border-none text-left py-3 sm:py-0" style="min-height:44px" id="logo-btn" aria-label="Scroll to top">
+              <img src="/favicon.svg" alt="" class="h-6 w-6" />
+              <span class="text-base font-semibold tracking-tight text-primary">Free Prompt Studio</span>
+            </button>
+          <nav class="hidden lg:flex items-center gap-1">
+            <div class="nav-dd">
+              <button class="nav-link active" data-nav="generator">
+                Generator
+                <svg class="nav-dd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="nav-dd-menu">
+                <button class="nav-dd-item" data-genmode="text">Text Prompt Generator</button>
+                <button class="nav-dd-item" data-genmode="image">Image Prompt Generator</button>
+                <button class="nav-dd-item" data-genmode="video">Video Prompt Generator</button>
+              </div>
+            </div>
             <button class="nav-link" data-nav="templates">Templates</button>
             <button class="nav-link" data-nav="analyzer">Analyzer</button>
             <a href="/prompts" class="nav-link">Prompts</a>
           </nav>
         </div>
         <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Mobile nav pills -->
-          <div class="flex sm:hidden items-center gap-1 overflow-x-auto max-w-[220px]" id="mobile-nav">
-            <button class="btn-ghost active whitespace-nowrap" data-nav="generator">Gen</button>
-            <button class="btn-ghost whitespace-nowrap" data-nav="templates">Templates</button>
-            <button class="btn-ghost whitespace-nowrap" data-nav="analyzer">Analyze</button>
-            <a href="/prompts" class="btn-ghost whitespace-nowrap">Prompts</a>
-          </div>
-          <button class="theme-toggle shrink-0" id="theme-toggle" title="Toggle theme">
-            <svg class="w-4 h-4" id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-expanded="false">
+            <svg id="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg id="menu-close-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+          <button class="theme-toggle shrink-0" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+            <svg class="w-4 h-4" id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="5" />
               <line x1="12" y1="1" x2="12" y2="3" />
               <line x1="12" y1="21" x2="12" y2="23" />
@@ -52,11 +67,41 @@ import '../styles/global.css';
               <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
             </svg>
-            <svg class="w-4 h-4 hidden" id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-4 h-4 hidden" id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
           </button>
         </div>
+      </div>
+      <!-- Mobile drawer overlay -->
+      <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-40 lg:hidden" data-open="false"></div>
+
+      <!-- Mobile drawer -->
+      <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 max-w-[80vw] z-50 bg-surface border-l border-default lg:hidden shadow-2xl" data-open="false">
+        <div class="flex items-center justify-between px-4 h-14 border-b border-default">
+          <span class="text-sm font-semibold text-primary">Menu</span>
+          <button id="menu-close-btn" class="cursor-pointer bg-transparent border-none p-2 text-tertiary hover:text-primary transition-colors rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <nav class="flex flex-col p-3 gap-1">
+          <div>
+            <button class="nav-link active w-full flex items-center justify-between" id="mob-gen-toggle" aria-expanded="false">
+              Generator
+              <svg class="nav-dd-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mob-submenu" id="mob-gen-submenu">
+              <button class="mob-sub-item" data-genmode="text">Text Prompt Generator</button>
+              <button class="mob-sub-item" data-genmode="image">Image Prompt Generator</button>
+              <button class="mob-sub-item" data-genmode="video">Video Prompt Generator</button>
+            </div>
+          </div>
+          <button class="nav-link" data-nav="templates">Templates</button>
+          <button class="nav-link" data-nav="analyzer">Analyzer</button>
+          <a href="/prompts" class="nav-link">Prompts</a>
+        </nav>
       </div>
     </header>
 
@@ -65,14 +110,14 @@ import '../styles/global.css';
 
       <!-- Page heading -->
       <div class="pt-6 sm:pt-8 pb-3 sm:pb-4">
-        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-primary">Turn rough ideas into <span class="gradient-text">production-ready prompts</span></h1>
-        <p class="mt-0.5 text-sm text-tertiary">Generator · Templates · Analyzer — all in your browser.</p>
+        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-primary">AI Prompt Generator - <span class="gradient-text">Describe what you need, get a prompt that works</span></h1>
+        <p class="mt-1 text-sm text-tertiary">Describe what you need, pick a framework, and get a structured prompt ready to use. All in your browser, always free.</p>
       </div>
 
       <!-- Method tabs -->
-      <div class="border-b border-default flex overflow-x-auto" id="method-tabs">
+      <div class="border-b border-default flex" id="method-tabs">
         <button class="tab-btn active shrink-0" data-method="generator">
-          <span class="hidden sm:inline">Goal-to-Prompt Generator</span>
+          <span class="hidden sm:inline">AI Prompt Generator</span>
           <span class="sm:hidden">Generator</span>
         </button>
         <button class="tab-btn shrink-0" data-method="templates">
@@ -90,28 +135,40 @@ import '../styles/global.css';
 
         <!-- ━━━━━━ METHOD 1: GENERATOR ━━━━━━ -->
         <div id="panel-generator" class="method-panel">
+
+          <!-- Quick input with suggestion chips -->
+          <div class="mb-4 sm:mb-5">
+            <div class="card">
+              <div class="card-header">What do you need a prompt for?</div>
+              <div class="card-content space-y-3">
+                <textarea class="input-mono min-h-[80px] sm:min-h-[90px]" id="quick-input" placeholder="e.g. Write a blog post about remote work productivity tips..."></textarea>
+                <div class="flex flex-wrap gap-1.5" id="suggestion-chips"></div>
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             <div class="lg:col-span-2 space-y-4 sm:space-y-5">
 
               <div class="card">
                 <div class="card-header">Prompt Framework</div>
                 <div class="card-content">
-                  <div class="flex flex-wrap gap-1.5 sm:gap-2" id="framework-selector">
-                    <button class="btn-ghost active" data-framework="CO-STAR">CO-STAR</button>
-                    <button class="btn-ghost" data-framework="RISEN">RISEN</button>
-                    <button class="btn-ghost" data-framework="CRAFT">CRAFT</button>
-                    <button class="btn-ghost" data-framework="ORACLE">ORACLE</button>
-                    <button class="btn-ghost" data-framework="RACE">RACE</button>
-                    <button class="btn-ghost" data-framework="CARE">CARE</button>
-                    <button class="btn-ghost" data-framework="APE">APE</button>
-                    <button class="btn-ghost" data-framework="CREATE">CREATE</button>
-                    <button class="btn-ghost" data-framework="TAG">TAG</button>
-                    <button class="btn-ghost" data-framework="CREO">CREO</button>
-                    <button class="btn-ghost" data-framework="RISE">RISE</button>
-                    <button class="btn-ghost" data-framework="PAIN">PAIN</button>
-                    <button class="btn-ghost" data-framework="COAST">COAST</button>
-                    <button class="btn-ghost" data-framework="Freeform">Freeform</button>
-                  </div>
+                  <select class="input-default w-full" id="framework-selector">
+                    <option value="CO-STAR">CO-STAR</option>
+                    <option value="RISEN">RISEN</option>
+                    <option value="CRAFT">CRAFT</option>
+                    <option value="ORACLE">ORACLE</option>
+                    <option value="RACE">RACE</option>
+                    <option value="CARE">CARE</option>
+                    <option value="APE">APE</option>
+                    <option value="CREATE">CREATE</option>
+                    <option value="TAG">TAG</option>
+                    <option value="CREO">CREO</option>
+                    <option value="RISE">RISE</option>
+                    <option value="PAIN">PAIN</option>
+                    <option value="COAST">COAST</option>
+                    <option value="Freeform">Freeform</option>
+                  </select>
                   <p class="mt-2 text-xs text-tertiary" id="framework-desc">Context, Objective, Style, Tone, Audience, Response</p>
                 </div>
               </div>
@@ -150,21 +207,40 @@ import '../styles/global.css';
 
             <div class="space-y-4 sm:space-y-5">
               <div class="card">
-                <div class="card-header">Response Text Sanitizer</div>
-                <div class="card-content-sm space-y-3">
-                  <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-input" placeholder="Paste raw AI output here..."></textarea>
-                  <div class="flex flex-wrap gap-1.5">
-                    <button class="btn-ghost" id="sani-backticks">Strip Backticks</button>
-                    <button class="btn-ghost" id="sani-fluff">Remove AI Fluff</button>
-                    <button class="btn-ghost" id="sani-spaces">Collapse Spaces</button>
-                    <button class="btn-ghost" id="sani-markdown">Strip Markdown</button>
-                    <button class="btn-ghost" id="sani-quotes">Fix Smart Quotes</button>
-                    <button class="btn-ghost" id="sani-unicode">Strip Unicode</button>
+                <div class="card-header">Tips</div>
+                <div class="card-content-sm space-y-3 text-xs text-secondary leading-relaxed">
+                  <p><strong class="text-primary">1.</strong> Start by describing what you need in the box above.</p>
+                  <p><strong class="text-primary">2.</strong> Choose a prompt framework that matches your task.</p>
+                  <p><strong class="text-primary">3.</strong> Fill in the variables to customize your prompt.</p>
+                  <p><strong class="text-primary">4.</strong> Copy the compiled prompt and use it with any AI.</p>
+                  <div class="pt-2 border-t border-default">
+                    <p class="text-tertiary">Need to clean up AI output? <button class="underline cursor-pointer bg-transparent border-none text-accent hover:text-accent-hover inline-block py-4 min-w-[44px]" id="toggle-sanitizer">Open Sanitizer →</button></p>
                   </div>
-                  <div class="relative">
-                    <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-output" readonly placeholder="Cleaned output will appear here..."></textarea>
-                    <button class="btn-ghost absolute right-1.5 top-1.5" id="sani-copy">Copy</button>
-                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsible Sanitizer -->
+          <div class="mt-4 hidden" id="sanitizer-section">
+            <div class="card">
+              <div class="card-header flex items-center justify-between">
+                <span>Response Text Sanitizer</span>
+                <button class="btn-ghost" id="close-sanitizer">✕</button>
+              </div>
+              <div class="card-content-sm space-y-3">
+                <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-input" placeholder="Paste raw AI output here..."></textarea>
+                <div class="flex flex-wrap gap-1.5">
+                  <button class="btn-ghost" id="sani-backticks">Strip Backticks</button>
+                  <button class="btn-ghost" id="sani-fluff">Remove AI Fluff</button>
+                  <button class="btn-ghost" id="sani-spaces">Collapse Spaces</button>
+                  <button class="btn-ghost" id="sani-markdown">Strip Markdown</button>
+                  <button class="btn-ghost" id="sani-quotes">Fix Smart Quotes</button>
+                  <button class="btn-ghost" id="sani-unicode">Strip Unicode</button>
+                </div>
+                <div class="relative">
+                  <textarea class="input-mono min-h-[80px] sm:min-h-[100px]" id="sani-output" readonly placeholder="Cleaned output will appear here..."></textarea>
+                  <button class="btn-ghost absolute right-1.5 top-1.5" id="sani-copy">Copy</button>
                 </div>
               </div>
             </div>
@@ -242,7 +318,7 @@ import '../styles/global.css';
                 <div class="card-header">Quality Score</div>
                 <div class="card-content flex flex-col items-center">
                   <div class="score-ring" id="score-ring">
-                    <svg width="100" height="100" viewBox="0 0 120 120" class="sm:w-[120px] sm:h-[120px]">
+                    <svg width="100" height="100" viewBox="0 0 120 120" class="sm:w-[120px] sm:h-[120px]" aria-hidden="true">
                       <circle class="score-ring-bg" cx="60" cy="60" r="52" />
                       <circle class="score-ring-fill" id="score-ring-fill" cx="60" cy="60" r="52"
                         stroke="currentColor"
@@ -283,7 +359,7 @@ import '../styles/global.css';
       <!-- ═══════ USEFUL PROMPTS ═══════ -->
       <div class="mt-10 sm:mt-12 pt-5 sm:pt-6 border-t border-default" id="section-prompts">
         <h2 class="text-lg sm:text-xl font-semibold tracking-tight text-primary">Useful Ready-to-Use Prompts</h2>
-        <p class="mt-1 text-sm text-tertiary">Click any prompt to reveal the full text, then copy it. <a href="/prompts" class="text-accent hover:text-accent-hover underline">View all prompts &rarr;</a></p>
+        <p class="mt-1 text-sm text-tertiary">Click any prompt to reveal the full text, then copy it. <a href="/prompts" class="text-accent hover:text-accent-hover underline inline-block py-3">View all prompts &rarr;</a></p>
         <div class="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="prompts-section"></div>
       </div>
 
@@ -297,12 +373,12 @@ import '../styles/global.css';
               <span>100% browser · Free</span>
             </div>
             <nav class="flex items-center gap-4 text-xs text-secondary">
-              <a href="/terms" class="hover:text-primary transition-colors">Terms</a>
-              <a href="/privacy" class="hover:text-primary transition-colors">Privacy</a>
-              <a href="/faq" class="hover:text-primary transition-colors">FAQ</a>
+              <a href="/terms" class="hover:text-primary transition-colors py-4 min-w-[44px] text-center">Terms</a>
+              <a href="/privacy" class="hover:text-primary transition-colors py-4 min-w-[44px] text-center">Privacy</a>
+              <a href="/faq" class="hover:text-primary transition-colors py-4 min-w-[44px] text-center">FAQ</a>
             </nav>
           </div>
-          <p class="mt-3 text-[10px] text-tertiary text-center sm:text-left">100% static — runs entirely in your browser. No data is sent to any server.</p>
+          <p class="mt-3 text-[10px] text-tertiary text-center sm:text-left">100% static. Runs entirely in your browser. No data is sent to any server.</p>
         </div>
       </footer>
     </div>
@@ -333,6 +409,47 @@ import '../styles/global.css';
       import { pushStateToURL, getStateFromURL } from '../lib/urlEncoder.js';
       import { PROMPTS, getPromptsByCategory } from '../lib/prompts.js';
 
+      // ── Mobile drawer ──
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuOverlay = document.getElementById('menu-overlay');
+      const menuCloseBtn = document.getElementById('menu-close-btn');
+      const menuIcon = document.getElementById('menu-icon');
+      const menuCloseIcon = document.getElementById('menu-close-icon');
+
+      function openMenu() {
+        mobileMenu.setAttribute('data-open', 'true');
+        menuOverlay.setAttribute('data-open', 'true');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        menuIcon.classList.add('hidden');
+        menuCloseIcon.classList.remove('hidden');
+      }
+
+      function closeMenu() {
+        mobileMenu.setAttribute('data-open', 'false');
+        menuOverlay.setAttribute('data-open', 'false');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        menuIcon.classList.remove('hidden');
+        menuCloseIcon.classList.add('hidden');
+      }
+
+      if (hamburgerBtn && mobileMenu && menuOverlay) {
+        hamburgerBtn.addEventListener('click', () => {
+          if (mobileMenu.getAttribute('data-open') === 'true') {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        });
+        menuOverlay.addEventListener('click', closeMenu);
+        if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('button, a').forEach(el => {
+          el.addEventListener('click', closeMenu);
+        });
+      }
+
       // ── Logo scroll-to-top ──
       document.getElementById('logo-btn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -349,7 +466,6 @@ import '../styles/global.css';
         Object.keys(panels).forEach(key => panels[key].classList.toggle('hidden', key !== method));
         methodTabs.forEach(t => t.classList.toggle('active', t.dataset.method === method));
         navLinks.forEach(n => n.classList.toggle('active', n.dataset.nav === method));
-        promptsDropdown.classList.add('hidden');
       }
 
       methodTabs.forEach(tab => tab.addEventListener('click', () => switchMethod(tab.dataset.method)));
@@ -360,7 +476,7 @@ import '../styles/global.css';
       let selectedModel = 'chatgpt';
       let frameworkValues = {};
 
-      const frameworkBtns = document.querySelectorAll('#framework-selector .btn-ghost');
+      const frameworkSelect = document.getElementById('framework-selector');
       const frameworkDesc = document.getElementById('framework-desc');
       const varFields = document.getElementById('variable-fields');
       const fieldCount = document.getElementById('field-count');
@@ -402,12 +518,10 @@ import '../styles/global.css';
         compileGenerator();
       }
 
-      frameworkBtns.forEach(btn => btn.addEventListener('click', () => {
-        frameworkBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedFramework = btn.dataset.framework;
+      frameworkSelect.addEventListener('change', () => {
+        selectedFramework = frameworkSelect.value;
         renderFields(selectedFramework);
-      }));
+      });
 
       function compileGenerator() {
         genOutput.value = compileFramework(selectedFramework, frameworkValues, selectedModel);
@@ -428,6 +542,164 @@ import '../styles/global.css';
         btnGenShare.textContent = 'URL Updated!';
         setTimeout(() => { btnGenShare.textContent = orig; }, 1500);
       });
+
+      // ── Quick input → Objective field sync ──
+      const quickInput = document.getElementById('quick-input');
+      if (quickInput) {
+        quickInput.addEventListener('input', () => {
+          const meta = FRAMEWORK_META[selectedFramework];
+          if (meta) {
+            const firstField = meta.fields[0];
+            if (firstField) {
+              frameworkValues[firstField.key] = quickInput.value;
+              compileGenerator();
+            }
+          }
+        });
+      }
+
+      // ── Generator mode switching (nav dropdown) ──
+      let genCategory = 'text';
+      const suggestionChips = document.getElementById('suggestion-chips');
+
+      const GEN_MODES = {
+        text: {
+          placeholder: 'e.g. Write a blog post about remote work productivity tips...',
+          usePrefix: true,
+          models: ['chatgpt', 'claude', 'gemini', 'grok', 'perplexity'],
+          chips: [
+            { text: 'Write a blog post about', label: 'Blog post', icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>' },
+            { text: 'Draft a professional email about', label: 'Email', icon: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>' },
+            { text: 'Create social media content for', label: 'Social media', icon: '<path d="M4 9a5 5 0 1 1 10 0A5 5 0 0 1 4 9Z"/><path d="M12 21a9 9 0 1 1 9-9 3 3 0 0 1-6 0 6 6 0 1 0-6 6 3 3 0 0 0 3 3Z"/>' },
+            { text: 'Write persuasive sales copy for', label: 'Sales copy', icon: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>' },
+            { text: 'Explain in simple terms', label: 'Explain', icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>' },
+            { text: 'Brainstorm creative ideas for', label: 'Brainstorm', icon: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>' },
+          ],
+        },
+        image: {
+          placeholder: 'e.g. A photorealistic mountain landscape at sunset',
+          usePrefix: false,
+          models: ['midjourney'],
+          chips: [
+            { text: 'Generate a photorealistic image of', label: 'Photorealistic', icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>' },
+            { text: 'Create a logo for', label: 'Logo', icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>' },
+            { text: 'Illustrate a concept of', label: 'Illustration', icon: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>' },
+            { text: 'Design a product mockup for', label: 'Mockup', icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>' },
+            { text: 'Create a character design for', label: 'Character', icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
+            { text: 'Generate an architectural render of', label: 'Architecture', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+          ],
+        },
+        video: {
+          placeholder: 'e.g. A 2-minute product explainer video script',
+          usePrefix: false,
+          models: ['chatgpt', 'claude', 'gemini'],
+          chips: [
+            { text: 'Write a video script for', label: 'Script', icon: '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/>' },
+            { text: 'Create a YouTube description for', label: 'YouTube', icon: '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>' },
+            { text: 'Plan a storyboard for', label: 'Storyboard', icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>' },
+            { text: 'Write a voiceover script for', label: 'Voiceover', icon: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>' },
+          ],
+        },
+      };
+
+      function renderChips(modeId) {
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        suggestionChips.innerHTML = mode.chips.map(ch =>
+          `<button class="btn-ghost chip inline-flex items-center gap-1.5" data-text="${ch.text}"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ch.icon}</svg> ${ch.label}</button>`
+        ).join('');
+        suggestionChips.querySelectorAll('.chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const text = chip.dataset.text;
+            const mode = GEN_MODES[genCategory];
+            if (quickInput) {
+              quickInput.value = (mode && mode.usePrefix) ? `I want a prompt to ${text} ` : `${text} `;
+              quickInput.dispatchEvent(new Event('input'));
+              quickInput.focus();
+            }
+          });
+        });
+      }
+
+      function renderModels(modeId) {
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        const filtered = MODELS.filter(m => mode.models.includes(m.id));
+        if (!mode.models.includes(selectedModel) && filtered.length > 0) {
+          selectedModel = filtered[0].id;
+        }
+        modelSelector.innerHTML = filtered.map(m =>
+          `<button class="btn-ghost ${m.id === selectedModel ? 'active' : ''}" data-model="${m.id}">${m.label}</button>`
+        ).join('');
+        modelSelector.querySelectorAll('.btn-ghost').forEach(btn => btn.addEventListener('click', () => {
+          modelSelector.querySelectorAll('.btn-ghost').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedModel = btn.dataset.model;
+          const m = MODELS.find(x => x.id === selectedModel);
+          if (m) modelDesc.textContent = m.desc;
+          compileGenerator();
+        }));
+        const m = MODELS.find(x => x.id === selectedModel);
+        if (m) modelDesc.textContent = m.desc;
+      }
+
+      function switchGeneratorMode(modeId) {
+        genCategory = modeId;
+        const mode = GEN_MODES[modeId];
+        if (!mode) return;
+        if (quickInput) quickInput.placeholder = mode.placeholder;
+        renderChips(modeId);
+        renderModels(modeId);
+        // Update nav dropdown active state
+        document.querySelectorAll('.nav-dd-item').forEach(el => el.classList.toggle('active', el.dataset.genmode === modeId));
+        compileGenerator();
+      }
+
+      // Desktop dropdown click
+      document.querySelectorAll('.nav-dd-item').forEach(item => {
+        item.addEventListener('click', () => {
+          switchMethod('generator');
+          switchGeneratorMode(item.dataset.genmode);
+        });
+      });
+
+      // Mobile submenu toggle
+      const mobGenToggle = document.getElementById('mob-gen-toggle');
+      const mobGenSubmenu = document.getElementById('mob-gen-submenu');
+      if (mobGenToggle && mobGenSubmenu) {
+        mobGenToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = mobGenSubmenu.classList.toggle('open');
+          mobGenToggle.setAttribute('aria-expanded', open);
+        });
+      }
+
+      // Mobile submenu item click
+      document.querySelectorAll('.mob-sub-item').forEach(item => {
+        item.addEventListener('click', () => {
+          closeMenu();
+          switchMethod('generator');
+          switchGeneratorMode(item.dataset.genmode);
+        });
+      });
+
+      // Initialize text mode
+      switchGeneratorMode('text');
+
+      // ── Sanitizer toggle ──
+      const toggleSanitizer = document.getElementById('toggle-sanitizer');
+      const sanitizerSection = document.getElementById('sanitizer-section');
+      const closeSanitizer = document.getElementById('close-sanitizer');
+      if (toggleSanitizer && sanitizerSection) {
+        toggleSanitizer.addEventListener('click', () => {
+          sanitizerSection.classList.toggle('hidden');
+        });
+      }
+      if (closeSanitizer && sanitizerSection) {
+        closeSanitizer.addEventListener('click', () => {
+          sanitizerSection.classList.add('hidden');
+        });
+      }
 
       // ── Templates ──
       let activeCategory = 'writing';
@@ -531,7 +803,7 @@ Constraints:
 - Do not use jargon without explanation
 - Keep paragraphs short for readability
 - Each section must include at least one specific example or data point
-- Avoid promotional language — focus on providing value
+- Avoid promotional language: focus on providing value
 - Format with bullet points or numbered lists where appropriate`;
             break;
           }
@@ -542,7 +814,7 @@ Constraints:
 
 Context: You are writing to ${v.recipient} with a ${tone} tone. The email should clearly convey its purpose and drive the desired action.
 
-Subject: [${v.purpose || 'Update'}] — [Generate compelling subject line]
+Subject: [${v.purpose || 'Update'}]: [Generate compelling subject line]
 
 Dear ${v.recipient},
 
@@ -550,7 +822,7 @@ I hope this message finds you well. I'm writing to discuss ${v.purpose || 'the f
 
 Tone: ${tone}
 Constraints:
-- Keep the message concise and focused — do not exceed 3-4 paragraphs
+- Keep the message concise and focused: do not exceed 3-4 paragraphs
 - Include specific next steps or action items
 - Maintain a ${tone} tone throughout
 - Avoid unnecessary jargon or overly complex language
@@ -571,18 +843,18 @@ Best regards,
 Context: The copy targets ${v.audience || 'ideal customers'} with the core benefit of ${v.benefit || 'solving a key problem'}. The goal is to drive conversions through the ${v.cta || 'primary call to action'}.
 
 Copy Structure (AIDA Framework):
-1. ATTENTION — Open with a powerful hook that grabs attention
-2. INTEREST — Build interest by highlighting the core benefit: ${v.benefit || 'the main advantage'}
-3. DESIRE — Create desire through benefits, social proof, and emotional triggers
-4. ACTION — Drive action with a clear, compelling CTA: ${v.cta || 'the next step'}
+1. ATTENTION: Open with a powerful hook that grabs attention
+2. INTEREST: Build interest by highlighting the core benefit: ${v.benefit || 'the main advantage'}
+3. DESIRE: Create desire through benefits, social proof, and emotional triggers
+4. ACTION: Drive action with a clear, compelling CTA: ${v.cta || 'the next step'}
 
 Constraints:
 - Speak directly to ${v.audience || 'the target audience'} using "you" and "your"
-- Focus on benefits, not just features — explain why each feature matters
+- Focus on benefits, not just features: explain why each feature matters
 - Use persuasive language and power words
-- Keep paragraphs short and scannable — no more than 3 sentences each
+- Keep paragraphs short and scannable: no more than 3 sentences each
 - End with urgency or a reason to act now
-- Do not use vague claims — support each assertion with a specific benefit
+- Do not use vague claims: support each assertion with a specific benefit
 - Tone: Persuasive, benefit-focused, action-oriented. Avoid being overly salesy`;
             break;
           }
@@ -599,7 +871,7 @@ ${v.sections ? `- Sections to include:\n${v.sections}\n` : '- 2-3 main content s
 
 Constraints:
 - Use a conversational, friendly tone throughout
-- Keep paragraphs short for email reading — max 3 sentences each
+- Keep paragraphs short for email reading: max 3 sentences each
 - Use bullet points for key information
 - Do not exceed 5-7 total sections including opening and closing
 - Include a personal touch or anecdote to connect with readers
@@ -612,20 +884,20 @@ Constraints:
 
 Context: The codebase is written in ${v.language || 'the specified language/stack'}. The review must focus on ${v.focus || 'general code quality and best practices'}. ${v.constraints ? `Additional constraints: ${v.constraints}` : ''}
 
-Review Checklist — evaluate each area and provide specific feedback:
-- Code correctness and logic errors — identify any bugs or edge cases
-- Performance considerations — flag inefficient algorithms or resource usage
-- Security vulnerabilities — check for injection risks, data exposure, or auth flaws
-- Code style and conventions — verify consistency with project standards
-- Error handling and edge cases — ensure all failure modes are handled
-- Documentation and comments — assess clarity and completeness
-- Test coverage suggestions — recommend specific test cases to add
+Review Checklist: evaluate each area and provide specific feedback:
+- Code correctness and logic errors: identify any bugs or edge cases
+- Performance considerations: flag inefficient algorithms or resource usage
+- Security vulnerabilities: check for injection risks, data exposure, or auth flaws
+- Code style and conventions: verify consistency with project standards
+- Error handling and edge cases: ensure all failure modes are handled
+- Documentation and comments: assess clarity and completeness
+- Test coverage suggestions: recommend specific test cases to add
 
 Constraints:
-- Provide specific, actionable feedback for each issue found — not just what is wrong but how to fix it
+- Provide specific, actionable feedback for each issue found: not just what is wrong but how to fix it
 - Include code examples showing the recommended fix
 - Prioritize issues by severity: critical, major, minor
-- Do not make assumptions — ask clarifying questions when needed
+- Do not make assumptions: ask clarifying questions when needed
 - Tone: Constructive, professional, and collaborative. Focus on improving the code, not criticizing the author
 
 Format: Produce a structured review with severity labels and suggested fixes for each issue.`;
@@ -638,16 +910,16 @@ Format: Produce a structured review with severity labels and suggested fixes for
 Context: The bug occurs in ${v.language || 'the specified language/framework'}. The symptom is: ${v.symptom}. ${v.tried ? 'The following approaches have already been attempted: ' + v.tried : 'No debugging attempts have been made yet.'}
 
 ${v.code ? `Relevant Code:\n\`\`\`\n${v.code}\n\`\`\`\n` : ''}
-Your task — help resolve this issue by providing:
-1. Root cause analysis — identify what is causing the bug and why
-2. Fix recommendation — provide corrected code or configuration changes
-3. Prevention strategy — suggest testing patterns or code changes to avoid similar issues
+Your task: help resolve this issue by providing:
+1. Root cause analysis: identify what is causing the bug and why
+2. Fix recommendation: provide corrected code or configuration changes
+3. Prevention strategy: suggest testing patterns or code changes to avoid similar issues
 
 Constraints:
 - Explain the root cause in clear terms before providing the fix
-- Provide complete, working code examples — not pseudocode
+- Provide complete, working code examples: not pseudocode
 - Consider edge cases and error states
-- Do not suggest overly complex solutions — prefer minimal, targeted fixes
+- Do not suggest overly complex solutions: prefer minimal, targeted fixes
 - If multiple possible causes exist, list them in order of likelihood
 - Tone: Analytical, methodical, and educational. Explain your reasoning step by step.
 
@@ -661,7 +933,7 @@ Output Format: Provide a root cause analysis, a specific fix recommendation with
 Context: The API uses the ${v.pattern || 'REST'} pattern on ${v.tech || 'the specified tech stack'}. Key resources to model include: ${v.resources || 'the core domain entities'}.
 
 Design Requirements:
-- Follow ${v.pattern || 'RESTful'} conventions and best practices — use proper HTTP methods and status codes
+- Follow ${v.pattern || 'RESTful'} conventions and best practices: use proper HTTP methods and status codes
 - Define clear endpoint naming and versioning strategy (e.g., /api/v1/resources)
 - Include request/response schemas for each endpoint with required and optional fields
 - Plan authentication and authorization model (JWT, OAuth, API keys)
@@ -676,7 +948,7 @@ Output Format: For each endpoint, provide:
 - Example request and response bodies
 
 Constraints:
-- Follow the ${v.pattern || 'REST'} pattern consistently — do not mix patterns
+- Follow the ${v.pattern || 'REST'} pattern consistently: do not mix patterns
 - Ensure all endpoints follow RESTful naming conventions (nouns, not verbs)
 - Include at least one example of error handling
 - Consider idempotency for PUT and DELETE operations
@@ -693,11 +965,11 @@ Context: ${v.constraints ? 'Constraints: ' + v.constraints : 'The system must ba
 Architecture Requirements:
 - High-level system diagram description showing all major components and their interactions
 - Component breakdown with clear responsibilities and boundaries
-- Data flow between services — synchronous vs asynchronous communication
-- Storage and caching strategy — database choices, cache layers, data partitioning
-- Scalability and performance considerations — horizontal vs vertical scaling
-- Security architecture — authentication, authorization, encryption, network segmentation
-- Monitoring and observability — logging, metrics, alerting, tracing
+- Data flow between services: synchronous vs asynchronous communication
+- Storage and caching strategy: database choices, cache layers, data partitioning
+- Scalability and performance considerations: horizontal vs vertical scaling
+- Security architecture: authentication, authorization, encryption, network segmentation
+- Monitoring and observability: logging, metrics, alerting, tracing
 - Trade-offs and alternatives considered with rationale for chosen approach
 
 Output Format: Provide a structured architecture document with:
@@ -709,7 +981,7 @@ Output Format: Provide a structured architecture document with:
 
 Constraints:
 - Address each key concern explicitly with a specific design decision
-- Do not introduce unnecessary complexity — prefer simple solutions where adequate
+- Do not introduce unnecessary complexity: prefer simple solutions where adequate
 - Consider failure modes and include resilience patterns
 - Tone: Analytical, systematic, and decision-oriented. Explain why each choice was made.`;
             break;
@@ -734,8 +1006,8 @@ ${v.platform ? `Platform-Specific Constraints for ${v.platform}:
 - Optimize for ${v.platform} audience behavior and consumption patterns` : ''}
 
 General Constraints:
-- Open with a hook in the first line — do not bury the lede
-- Focus on one primary benefit per ad — do not overwhelm with features
+- Open with a hook in the first line: do not bury the lede
+- Focus on one primary benefit per ad: do not overwhelm with features
 - Use active voice and power words throughout
 - End with urgency or a time-limited reason to act
 - Tone: Persuasive, benefit-focused, action-oriented. Match the brand voice.
@@ -747,7 +1019,7 @@ Output Format: Structured ad copy with an attention-grabbing headline, benefit-d
             if (!v.keyword) break;
             output = `You are an SEO content strategist. Create an optimized content brief for the keyword: "${v.keyword}"
 
-Context: The search intent is ${v.intent || 'informational'} — users searching for "${v.keyword}" want ${v.intent === 'Transactional' ? 'to make a purchase decision' : v.intent === 'Navigational' ? 'to find a specific page' : v.intent === 'Commercial' ? 'to compare options' : 'to learn more about the topic'}.
+Context: The search intent is ${v.intent || 'informational'}: users searching for "${v.keyword}" want ${v.intent === 'Transactional' ? 'to make a purchase decision' : v.intent === 'Navigational' ? 'to find a specific page' : v.intent === 'Commercial' ? 'to compare options' : 'to learn more about the topic'}.
 
 ${v.competitors ? `Competitor Analysis to differentiate from:\n${v.competitors}\n` : ''}${v.angle ? `Unique Angle: ${v.angle}\n` : ''}
 
@@ -768,7 +1040,7 @@ On-Page Optimization Requirements:
 
 Constraints:
 - Use the target keyword in H1, first paragraph, and naturally in 2-3 subheadings
-- Do not keyword stuff — use semantic variations and LSI terms
+- Do not keyword stuff: use semantic variations and LSI terms
 - Include at least one data point or statistic to support claims
 - Keep paragraphs under 4 sentences for readability
 - Tone: Authoritative, helpful, and accessible. Match the brand voice while maintaining SEO best practices.`;
@@ -810,7 +1082,7 @@ Landing Page Structure:
    - Strong, action-oriented CTA button with benefit-driven text
 
 Constraints:
-- Keep the hero section above the fold — no scrolling required to see headline and CTA
+- Keep the hero section above the fold: no scrolling required to see headline and CTA
 - Use short paragraphs (1-3 sentences) and plenty of whitespace
 - Each section must support the single conversion goal
 - Include at least one trust signal (testimonial, statistic, certification badge)
@@ -830,7 +1102,7 @@ Context: The goal is to generate a high-quality image of: ${v.subject}${s}${m}${
 Constraints:
 - The image must be photorealistic with cinematic quality
 - Use descriptive language that guides the AI toward the desired artistic style
-- Avoid abstract or ambiguous terms — be specific about visual elements
+- Avoid abstract or ambiguous terms: be specific about visual elements
 - The prompt should produce a cohesive composition with clear foreground, subject, and background
 
 Format: Use comma-separated descriptive phrases followed by technical parameters.
@@ -850,7 +1122,7 @@ Context: The image should depict ${v.scene}${s}${c}${m}. The goal is to produce 
 
 Constraints:
 - Use specific visual details rather than vague descriptors
-- Guide the composition — specify what appears in foreground, midground, and background
+- Guide the composition: specify what appears in foreground, midground, and background
 - Include lighting direction and quality (e.g., soft diffused light, dramatic backlighting)
 - Avoid text or readable characters in the generated image
 
@@ -866,7 +1138,7 @@ Create an image of ${v.scene}${s}${c}${m}. High quality, detailed, 4k resolution
 
 Context: This analysis is set in the context of ${v.market || 'the current market conditions'} with a focus on ${v.focus || 'overall business assessment'}. The analysis will inform strategic decision-making.
 
-Analysis Framework — evaluate each quadrant thoroughly:
+Analysis Framework: evaluate each quadrant thoroughly:
 
 ## Strengths (Internal Positive Factors)
 - What does ${v.business} do exceptionally well?
@@ -896,7 +1168,7 @@ Constraints:
 - Provide at least 4 specific, actionable points per quadrant
 - Prioritize items within each quadrant by impact and urgency
 - Include strategic implications and recommended actions for each finding
-- Do not list generic observations — each point must be specific to ${v.business}
+- Do not list generic observations: each point must be specific to ${v.business}
 - Tone: Analytical, objective, and strategic. Use business analysis terminology.`;
             break;
           }
@@ -960,7 +1232,7 @@ Paper Structure:
    - Brief summary of research question, methods, key findings, and conclusions (150-250 words)
 
 3. INTRODUCTION
-   - Background and context for ${v.topic} — why this research matters
+   - Background and context for ${v.topic}: why this research matters
    - Research problem and its significance
    - Specific research questions or hypotheses
    - Thesis statement: ${v.thesis || 'State your thesis'}
@@ -968,7 +1240,7 @@ Paper Structure:
 
 4. LITERATURE REVIEW
    - Key theories and frameworks relevant to ${v.topic}
-   - Current state of research — what is known and what gaps remain
+   - Current state of research: what is known and what gaps remain
    - How this paper addresses identified gaps
    - Critical evaluation of prior work
 
@@ -994,7 +1266,7 @@ Paper Structure:
 
 Constraints:
 - Each section must have a clear purpose and connection to the thesis
-- Use formal academic language throughout — do not use contractions or colloquialisms
+- Use formal academic language throughout: do not use contractions or colloquialisms
 - Include citations in appropriate academic format (APA, MLA, Chicago)
 - Ensure logical flow between sections with clear transitions
 - Tone: Academic, objective, and authoritative. Maintain third-person perspective.`;
@@ -1035,7 +1307,7 @@ ${v.questions ? v.questions.split('\n').filter(Boolean).map(q => `   - ${q}`).jo
 Constraints:
 - Begin with data quality assessment before any analysis
 - Use appropriate statistical significance levels (p < 0.05)
-- Do not overstate conclusions — clearly separate findings from interpretations
+- Do not overstate conclusions: clearly separate findings from interpretations
 - Include visualization recommendations for each key finding
 - Document all assumptions and methodological choices
 - Tone: Analytical, precise, and data-driven. Use statistical terminology correctly.`;
@@ -1087,8 +1359,8 @@ Assessment:
 Constraints:
 - Each learning objective must be addressed by at least one activity
 - Include differentiation strategies for at least two ability levels
-- Allocate time realistically — account for transitions between activities
-- Use active learning techniques — minimize lecture time
+- Allocate time realistically: account for transitions between activities
+- Use active learning techniques: minimize lecture time
 - Tone: Instructional, clear, and engaging. Write for the educator delivering the lesson.`;
             break;
           }
@@ -1107,7 +1379,7 @@ Study Guide Content:
 
 2. KEY THEORIES AND FRAMEWORKS
    - Main theories with their originators and core propositions
-   - Critical evaluation of each theory — strengths and limitations
+   - Critical evaluation of each theory: strengths and limitations
    - Real-world applications demonstrating each concept
 
 3. PRACTICAL APPLICATIONS
@@ -1123,12 +1395,12 @@ Study Guide Content:
 
 5. REVIEW AND SELF-ASSESSMENT
    - Chapter summaries highlighting the 3 most important takeaways each
-   - Review questions testing understanding — not just recall
+   - Review questions testing understanding: not just recall
    - Practice test with answer key and explanations
 
 Constraints:
 - Each concept must include a definition, example, and connection to the broader subject
-- Avoid unnecessary details — focus on what is most testable or applicable
+- Avoid unnecessary details: focus on what is most testable or applicable
 - Include memory aids for at least 5 key terms or concepts
 - Provide practice questions at varying difficulty levels
 - Tone: Clear, encouraging, and pedagogically effective. Write as if tutoring a student one-on-one.`;
@@ -1147,22 +1419,22 @@ Thread Structure:
 2/The most common misconception about ${v.topic}:
 [State what most people get wrong]
 
-3/[First key insight — include a specific data point, example, or framework]
+3/[First key insight: include a specific data point, example, or framework]
 
-4/[Second key insight — build on the first with a practical takeaway]
+4/[Second key insight: build on the first with a practical takeaway]
 
-5/[Third insight — offer a counterintuitive perspective or pro tip]
+5/[Third insight: offer a counterintuitive perspective or pro tip]
 
 6/[Real example, case study, or personal experience that illustrates the point]
 
-7/[Actionable advice — something readers can apply immediately]
+7/[Actionable advice: something readers can apply immediately]
 
 8/Summary: [Single sentence capturing the main takeaway]
 
 ${v.cta ? '\n' + v.cta : '\nWhat is your experience with this? Share your thoughts below 👇'}
 
 Constraints:
-- Each tweet must not exceed 280 characters — count carefully
+- Each tweet must not exceed 280 characters: count carefully
 - Open with a bold, curiosity-gap hook in tweet 1
 - Number each tweet (1/8, 2/8, etc.) for clear progression
 - Use line breaks within tweets for readability
@@ -1182,25 +1454,25 @@ Personal Angle: ${v.angle || 'Share your personal experience, insight, or lesson
 
 Post Structure:
 
-HEADLINE: [First 1-3 lines that grab attention — make it bold, specific, and relatable]
+HEADLINE: [First 1-3 lines that grab attention: make it bold, specific, and relatable]
 
 [Open with a personal story, observation, or surprising fact relating to ${v.topic}]
 
-[Share the key insight or lesson learned — be specific about what changed your thinking]
+[Share the key insight or lesson learned: be specific about what changed your thinking]
 
 [Provide actionable advice or a framework readers can apply today]
 
-Call to action: ${v.cta || 'Share your thoughts in the comments below — I would love to hear your perspective'}
+Call to action: ${v.cta || 'Share your thoughts in the comments below: I would love to hear your perspective'}
 
 [3-5 relevant hashtags]
 
 Constraints:
 - Write in first person for authenticity and connection
-- Keep paragraphs short — maximum 3 sentences each
+- Keep paragraphs short: maximum 3 sentences each
 - Include line breaks between sections for mobile readability
-- Lead with the most compelling idea — do not bury the lede
-- Be specific — include numbers, timelines, or concrete examples
-- Avoid corporate jargon and buzzwords — sound like a human, not a brand
+- Lead with the most compelling idea: do not bury the lede
+- Be specific: include numbers, timelines, or concrete examples
+- Avoid corporate jargon and buzzwords: sound like a human, not a brand
 - Tag 1-2 relevant people or companies if applicable
 - Tone: Professional but conversational. Authoritative but approachable. Write to start a conversation, not make a speech.`;
             break;
@@ -1268,7 +1540,7 @@ Constraints:
         scoreRingFill.style.strokeDashoffset = circumference - (result.score / 100) * circumference;
         scoreRingFill.style.stroke = getScoreColor(result.score);
         scoreValue.textContent = result.score;
-        scoreLabel.textContent = `${getScoreCategory(result.score)} — ${result.feedback}`;
+        scoreLabel.textContent = `${getScoreCategory(result.score)} - ${result.feedback}`;
         scoreWords.textContent = result.wordCount;
 
         criteriaList.innerHTML = result.criteria.map(c =>
@@ -1329,7 +1601,7 @@ Constraints:
         if (!analyzerImproved.value) return;
         frameworkValues = {};
         selectedFramework = FRAMEWORKS.FREE;
-        frameworkBtns.forEach(b => { b.classList.remove('active'); if (b.dataset.framework === FRAMEWORKS.FREE) b.classList.add('active'); });
+        frameworkSelect.value = FRAMEWORKS.FREE;
         renderFields(FRAMEWORKS.FREE);
         const promptField = varFields.querySelector('[data-fkey="prompt"]');
         if (promptField) { promptField.value = analyzerImproved.value; frameworkValues.prompt = analyzerImproved.value; }
@@ -1366,11 +1638,9 @@ Constraints:
       // ── State from URL ──
       const state = getStateFromURL();
       if (state && state.tool === 'generator' && state.framework) {
-        const fb = document.querySelector(`[data-framework="${state.framework}"]`);
-        if (fb) {
-          frameworkBtns.forEach(b => b.classList.remove('active'));
-          fb.classList.add('active');
+        if (Object.values(FRAMEWORKS).includes(state.framework)) {
           selectedFramework = state.framework;
+          frameworkSelect.value = state.framework;
           frameworkValues = state.values || {};
           renderFields(selectedFramework);
         }

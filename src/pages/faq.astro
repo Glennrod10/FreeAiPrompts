@@ -1,53 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="FAQ — Free Prompt Studio" description="Frequently asked questions about Free Prompt Studio, the free browser-based AI prompt engineering toolkit.">
+<BaseLayout title="FAQ - Free Prompt Studio" description="Frequently asked questions about Free Prompt Studio.">
   <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">Frequently Asked Questions</h1>
 
   <section class="mt-8 space-y-8 text-sm text-secondary leading-relaxed">
     <div>
-      <h2 class="text-base font-medium text-primary">Is Free Prompt Studio really free?</h2>
-      <p class="mt-1">Yes. It is 100% free, open source, and runs entirely in your browser. No signup, no API keys, no hidden costs.</p>
+      <h2 class="text-base font-medium text-primary">Is it really free?</h2>
+      <p class="mt-1">Yes. Free, open source, runs in your browser. No signup, no API keys, no charges.</p>
     </div>
 
     <div>
       <h2 class="text-base font-medium text-primary">Do you store my prompts?</h2>
-      <p class="mt-1">No. Everything stays in your browser. We do not collect, store, or transmit any data. The only local storage used is for your theme preference (light/dark mode).</p>
+      <p class="mt-1">No. Everything stays in your browser. Nothing is collected, stored, or transmitted. The only thing saved locally is your theme preference.</p>
     </div>
 
     <div>
-      <h2 class="text-base font-medium text-primary">What prompt frameworks are supported?</h2>
-      <p class="mt-1">We support CO-STAR, RISEN, CRAFT, and Freeform. Each framework has structured fields to help you build optimized prompts for any AI model.</p>
+      <h2 class="text-base font-medium text-primary">What frameworks are available?</h2>
+      <p class="mt-1">CO-STAR, RISEN, CRAFT, ORACLE, RACE, CARE, APE, CREATE, TAG, CREO, RISE, PAIN, COAST, and Freeform. Pick one that fits your task.</p>
     </div>
 
     <div>
-      <h2 class="text-base font-medium text-primary">Which AI models are supported?</h2>
-      <p class="mt-1">The generator works with ChatGPT, Claude, Gemini, Llama, DeepSeek, and Mistral. The framework compilers adapt the output structure based on your selected model.</p>
+      <h2 class="text-base font-medium text-primary">Which AI models does it target?</h2>
+      <p class="mt-1">ChatGPT, Claude, Gemini, Midjourney, Grok, and Perplexity. The output adapts to the model you select.</p>
     </div>
 
     <div>
-      <h2 class="text-base font-medium text-primary">How does the prompt analyzer work?</h2>
-      <p class="mt-1">It evaluates your prompt across 7 dimensions (clarity, role assignment, constraints, context, examples, tone, and output format) and gives a score from 0-100 with suggestions for improvement.</p>
+      <h2 class="text-base font-medium text-primary">How does the analyzer work?</h2>
+      <p class="mt-1">It scores your prompt across 7 dimensions: clarity, role, constraints, context, examples, tone, and format. Score is 0-100 with suggestions for what to add.</p>
     </div>
 
     <div>
-      <h2 class="text-base font-medium text-primary">Can I save or share my prompts?</h2>
-      <p class="mt-1">Yes. You can copy prompts to your clipboard, export them as .txt files, or share them via URL (the prompt data is encoded in the URL hash — no server involved).</p>
-    </div>
-
-    <div>
-      <h2 class="text-base font-medium text-primary">What is the response sanitizer?</h2>
-      <p class="mt-1">It cleans up AI-generated text by stripping backticks, removing common AI conversational fluff (~20 patterns), and collapsing excess whitespace. Useful when copying responses from ChatGPT or Claude.</p>
+      <h2 class="text-base font-medium text-primary">Can I share prompts?</h2>
+      <p class="mt-1">Yes. Copy to clipboard or share via URL. The prompt is encoded in the URL hash. No server involved, nothing stored.</p>
     </div>
 
     <div>
       <h2 class="text-base font-medium text-primary">Does it work offline?</h2>
-      <p class="mt-1">Once the page is loaded, all functionality works without an internet connection (except for loading Google Fonts on first visit).</p>
+      <p class="mt-1">Yes. Once loaded, everything runs locally. Google Fonts need a connection on first visit.</p>
     </div>
 
     <div>
-      <h2 class="text-base font-medium text-primary">Is there a dark mode?</h2>
-      <p class="mt-1">Yes. Dark mode is the default. You can toggle it via the sun/moon icon in the header. Your preference is saved locally.</p>
+      <h2 class="text-base font-medium text-primary">Dark mode?</h2>
+      <p class="mt-1">Dark mode is the default. Toggle it with the sun/moon icon in the header. Preference is saved locally.</p>
     </div>
   </section>
 </BaseLayout>

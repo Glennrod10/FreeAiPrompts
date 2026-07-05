@@ -145,16 +145,16 @@ export function analyzePrompt(text) {
   let feedback;
   let category;
   if (score >= 85) {
-    feedback = 'Well-structured prompt. Minor refinements could polish it further.';
+    feedback = 'Solid. A few tweaks and it will be ready.';
     category = 'excellent';
   } else if (score >= 65) {
-    feedback = 'Good foundation. Adding missing elements will significantly improve output quality.';
+    feedback = 'Decent start. Fill in the missing pieces.';
     category = 'good';
   } else if (score >= 40) {
-    feedback = 'Needs structural improvements. Several key prompt elements are missing.';
+    feedback = 'Missing key elements. Add role, constraints, and format.';
     category = 'fair';
   } else {
-    feedback = 'Your prompt lacks most structural elements. Use the builder to add role, context, and constraints.';
+    feedback = 'Barely structured. Use the Generator to build one from scratch.';
     category = 'weak';
   }
 
